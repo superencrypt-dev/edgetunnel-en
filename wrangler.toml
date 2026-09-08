@@ -1,0 +1,13 @@
+name = "edgetunnel-en"
+main = "_worker.js"
+compatibility_date = "2025-11-04"
+keep_vars = true
+
+[vars]
+UUID = "a8ca6a3f-919f-40f2-9e40-2c9204dfd0a2"
+SUB = ""
+
+#[[kv_namespaces]]
+[[kv_namespaces]]
+binding = "KV"
+id = "6f4c02860c7e4f649fe6b7014973efb3"
