@@ -4,9 +4,26 @@
 
 [![License](https://img.shields.io/github/license/superencrypt-dev/edgetunnel-en?style=flat-square)](LICENSE)
 [![Base project](https://img.shields.io/badge/based%20on-cmliu%2Fedgetunnel-blue?style=flat-square)](https://github.com/cmliu/edgetunnel)
-[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/superencrypt-dev/edgetunnel-en)
 
 ---
+
+## 🚀 One-Click Deploy
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/superencrypt-dev/edgetunnel-en)
+
+Click the button, authorize Cloudflare with your GitHub account, and it will:
+
+1. Clone this repo into your Cloudflare account
+2. Create the Worker and the KV namespace automatically
+3. Deploy everything
+
+**After the deploy, finish these 3 steps:**
+
+1. **Set your UUID** — Worker → Settings → Variables & Secrets → add `UUID` (any UUIDv4). Without it, clients can't connect.
+2. **Install the English panel** (optional) — dashboard KV editor, 2 copy-paste entries — see [panel install](docs/install-dashboard-workers.md#step-5--recommended-install-the-english-admin-panel)
+3. **Open** `https://<your-worker>.workers.dev/login` — password = your `UUID`
+
+> If the automated KV provisioning fails, bind a KV namespace named `KV` manually (Settings → Bindings) and redeploy — details in [docs/install-dashboard-workers.md](docs/install-dashboard-workers.md).
 
 ## ✨ Features
 
@@ -17,9 +34,9 @@
 - 🌐 **Multi-platform**: works with v2rayN, v2rayNG, Clash-family, Shadowrocket, Hiddify, Karing, and more
 - 🧾 **English changelog** and **Indonesian deployment tutorials** included
 
-## 📚 Deployment Tutorials (Bahasa Indonesia)
+## 📚 Manual Deployment Tutorials (Bahasa Indonesia)
 
-Pick the method that fits you — all in [`docs/`](docs/):
+Prefer manual control over the one-click deploy? Pick a method — all in [`docs/`](docs/):
 
 | # | Method | Difficulty | Best for |
 |---|---|---|---|
@@ -28,41 +45,14 @@ Pick the method that fits you — all in [`docs/`](docs/):
 | 3 | [Cloudflare Pages + GitHub](docs/install-pages-github.md) | ⭐⭐ | Auto-deploy on every push |
 | 4 | [Wrangler CLI](docs/install-wrangler-cli.md) | ⭐⭐ | Developers, terminal workflow |
 
+> Wrangler is optional — every guide has a no-CLI alternative (see the "I don't want to install Wrangler" table in [docs/TUTORIALS.md](docs/TUTORIALS.md)).
+
 After deployment:
 
 - [Client setup](docs/clients.md) — v2rayN/NG, Clash, sing-box, Shadowrocket, iOS
 - [Custom domain](docs/custom-domain.md) — bind your own domain
 - [Admin panel & post-install config](docs/after-install.md)
 - [Advanced usage](docs/advanced.md) — PATH proxy switching, environment variables, token math
-
-## 🚀 One-Click Deploy
-
-[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/superencrypt-dev/edgetunnel-en)
-
-Click the button (or the badge above), authorize Cloudflare with your GitHub account, and it will:
-
-1. Clone this repo into your Cloudflare account
-2. Create the Worker and the KV namespace automatically
-3. Deploy everything
-
-**After the one-click deploy, finish these 3 steps:**
-
-1. **Set your UUID** — Worker → Settings → Variables & Secrets → add `UUID` (any UUIDv4). Without it, clients can't connect.
-2. **Install the English panel** (optional) — dashboard KV editor, 2 copy-paste entries — see [panel install](docs/install-dashboard-workers.md#step-5--recommended-install-the-english-admin-panel)
-3. **Open** `https://<your-worker>.workers.dev/login` — password = your `UUID`
-
-> Repo is private: the flow requires you to authorize the Cloudflare GitHub app with access to it (you're the owner, so just approve).
-> Prefer manual control? Use the [tutorials](docs/TUTORIALS.md) below.
-
-## ⚡ Quick Start (60 seconds)
-
-1. Create a Worker in the [Cloudflare dashboard](https://dash.cloudflare.com)
-2. Paste [`_worker.js`](_worker.js) into the editor → Deploy
-3. Add variable `UUID` = your UUIDv4 → bind a KV namespace named `KV`
-4. Open `https://<your-worker>.workers.dev/login` — password = your UUID
-5. Copy the subscription link from the panel → import into your client
-
-Full walkthrough: [docs/install-dashboard-workers.md](docs/install-dashboard-workers.md) 🇮🇩
 
 ## 🔑 Key Environment Variables
 
@@ -80,7 +70,8 @@ Full list with all 14 variables: [docs/advanced.md](docs/advanced.md)
 
 The upstream project ships its panel in Chinese. This edition translates it —
 the panel files live in [`panel/`](panel/) and are loaded into KV during setup
-(two `wrangler kv key put` commands, or paste via the dashboard KV editor).
+(two `wrangler kv key put` commands, or paste via the dashboard KV editor —
+[step-by-step](docs/install-dashboard-workers.md#step-5--recommended-install-the-english-admin-panel)).
 The worker serves them automatically; the panel JS is bridged to the English
 config schema by a built-in key adapter, so everything just works.
 
