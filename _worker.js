@@ -10,7 +10,7 @@ const CONFIG_KEY_EN2CN = {
 	subConvertConfig: '订阅转换配置', protocolType: '协议类型', skipCertVerify: '跳过证书验证', enable0RTT: '启用0RTT',
 	tlsFragment: 'TLS分片', randomPath: '随机Path', fullNodePath: '完整节点Path', transportProtocol: '传输协议',
 	grpcMode: 'gRPC模式', cipherMethod: '加密方式', pathTemplates: '路径模板', loadTime: '加载时间',
-	proxy: '反代'
+	proxy: '反代', enable: '启用', global: '全局', account: '账号', whitelist: '白名单', standard: '标准'
 };
 const CONFIG_KEY_CN2EN = Object.fromEntries(Object.entries(CONFIG_KEY_EN2CN).map(([en, cn]) => [cn, en]));
 function convertConfigKeys(value, map) {
@@ -6153,7 +6153,7 @@ async function fetchPreferredAPI(urls, defaultPort = '443', timeoutMs = 3000) {
 				const headers = lines[0].split(',').map(h => h.trim());
 				const dataLines = lines.slice(1);
 				if ((headers.includes('IP address') || headers.includes('IP地址')) && (headers.includes('port') || headers.includes('端口')) && (headers.includes('datacenter') || headers.includes('数据中心'))) {
-					const ipIdx = headers.indexOf('IP address'), portIdx = headers.indexOf('port');
+					const ipIdx = headers.indexOf('IP address') > -1 ? headers.indexOf('IP address') : headers.indexOf('IP地址'), portIdx = headers.indexOf('port') > -1 ? headers.indexOf('port') : headers.indexOf('端口');
 					const remarkIdx = headers.indexOf('country') > -1 ? headers.indexOf('country') : headers.indexOf('国家') > -1 ? headers.indexOf('国家') :
 						headers.indexOf('city') > -1 ? headers.indexOf('city') : (headers.indexOf('城市') > -1 ? headers.indexOf('城市') : (headers.indexOf('datacenter') > -1 ? headers.indexOf('datacenter') : headers.indexOf('数据中心')));
 					const tlsIdx = headers.indexOf('TLS');

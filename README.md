@@ -1,4 +1,5 @@
 # 🚀 edgetunnel 2.1
+![Admin Panel](./img.png)
 
 [![Stars](https://img.shields.io/github/stars/cmliu/edgetunnel?style=flat-square&logo=github)](https://github.com/cmliu/edgetunnel/stargazers)
 [![Forks](https://img.shields.io/github/forks/cmliu/edgetunnel?style=flat-square&logo=github)](https://github.com/cmliu/edgetunnel/network/members)
@@ -110,6 +111,32 @@
    - Visit `https://lizi.fuck.cloudns.biz/admin` and enter the admin password to log in.
 
 </details>
+
+---
+
+## 🖼️ English Admin Panel
+
+The bundled admin panel and login page (served from the upstream static site) are in Chinese.
+This repository ships English translations in the `panel/` directory. The worker serves them
+automatically when the following KV keys exist — no code changes needed:
+
+| KV key | File |
+| :--- | :--- |
+| `admin_en.html` | `panel/admin_en.html` |
+| `login_en.html` | `panel/login_en.html` |
+
+Upload them (requires the `KV` binding from the deployment steps above):
+
+```
+npx wrangler kv key put --binding KV 'admin_en.html' --path panel/admin_en.html --remote
+npx wrangler kv key put --binding KV 'login_en.html'  --path panel/login_en.html  --remote
+```
+
+If the keys are missing, the worker falls back to the upstream Chinese pages.
+
+> **Note:** the panel JavaScript still reads/writes the config using the legacy Chinese keys.
+> The worker translates them automatically on `GET/POST /admin/config.json`, so the panel
+> works unchanged against the English config schema.
 
 ---
 
