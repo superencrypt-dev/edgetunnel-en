@@ -1,2 +1,5 @@
-panel/.wrangler/
+node_modules/
+.dev.vars
 .wrangler/
+panel/.wrangler/
+*.log
