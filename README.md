@@ -4,6 +4,7 @@
 
 [![License](https://img.shields.io/github/license/superencrypt-dev/edgetunnel-en?style=flat-square)](LICENSE)
 [![Base project](https://img.shields.io/badge/based%20on-cmliu%2Fedgetunnel-blue?style=flat-square)](https://github.com/cmliu/edgetunnel)
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/superencrypt-dev/edgetunnel-en)
 
 ---
 
@@ -33,6 +34,25 @@ After deployment:
 - [Custom domain](docs/custom-domain.md) — bind your own domain
 - [Admin panel & post-install config](docs/after-install.md)
 - [Advanced usage](docs/advanced.md) — PATH proxy switching, environment variables, token math
+
+## 🚀 One-Click Deploy
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/superencrypt-dev/edgetunnel-en)
+
+Click the button (or the badge above), authorize Cloudflare with your GitHub account, and it will:
+
+1. Clone this repo into your Cloudflare account
+2. Create the Worker and the KV namespace automatically
+3. Deploy everything
+
+**After the one-click deploy, finish these 3 steps:**
+
+1. **Set your UUID** — Worker → Settings → Variables & Secrets → add `UUID` (any UUIDv4). Without it, clients can't connect.
+2. **Install the English panel** (optional) — dashboard KV editor, 2 copy-paste entries — see [panel install](docs/install-dashboard-workers.md#step-5--recommended-install-the-english-admin-panel)
+3. **Open** `https://<your-worker>.workers.dev/login` — password = your `UUID`
+
+> Repo is private: the flow requires you to authorize the Cloudflare GitHub app with access to it (you're the owner, so just approve).
+> Prefer manual control? Use the [tutorials](docs/TUTORIALS.md) below.
 
 ## ⚡ Quick Start (60 seconds)
 

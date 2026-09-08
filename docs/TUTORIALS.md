@@ -2,6 +2,13 @@
 
 Pick the deployment method that fits you, then set up your client.
 
+## 🚀 One-Click Deploy
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/superencrypt-dev/edgetunnel-en)
+
+Clones this repo into your Cloudflare account, creates the Worker + KV automatically, and deploys.
+Afterwards: set the `UUID` variable and (optionally) install the English panel — 3 steps listed in the [README](../README.md#🚀-one-click-deploy).
+
 ## Deployment
 
 | # | Method | Difficulty | Best for |
