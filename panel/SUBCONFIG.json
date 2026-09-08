@@ -1,0 +1,116 @@
+[
+  {
+    "label": "ACL4SSR rules",
+    "options": [
+      {
+        "label": "Default, complete groups ACL4SSR_Online",
+        "value": "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/config/ACL4SSR_Online.ini"
+      },
+      {
+        "label": "Extra ad-blocking ACL4SSR_Online_AdblockPlus",
+        "value": "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/config/ACL4SSR_Online_AdblockPlus.ini"
+      },
+      {
+        "label": "Multi-country groups ACL4SSR_Online_MultiCountry",
+        "value": "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/config/ACL4SSR_Online_MultiCountry.ini"
+      },
+      {
+        "label": "No auto speed-test ACL4SSR_Online_NoAuto",
+        "value": "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/config/ACL4SSR_Online_NoAuto.ini"
+      },
+      {
+        "label": "No ad-block rules ACL4SSR_Online_NoReject",
+        "value": "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/config/ACL4SSR_Online_NoReject.ini"
+      },
+      {
+        "label": "Mini ACL4SSR_Online_Mini",
+        "value": "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/config/ACL4SSR_Online_Mini.ini"
+      },
+      {
+        "label": "Mini, extra ad-blocking ACL4SSR_Online_Mini_AdblockPlus",
+        "value": "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/config/ACL4SSR_Online_Mini_AdblockPlus.ini"
+      },
+      {
+        "label": "Mini, no auto speed-test ACL4SSR_Online_Mini_NoAuto",
+        "value": "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/config/ACL4SSR_Online_Mini_NoAuto.ini"
+      },
+      {
+        "label": "Mini, with failover ACL4SSR_Online_Mini_Fallback",
+        "value": "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/config/ACL4SSR_Online_Mini_Fallback.ini"
+      },
+      {
+        "label": "Mini, speed-test + failover + load-balance ACL4SSR_Online_Mini_MultiMode",
+        "value": "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/config/ACL4SSR_Online_Mini_MultiMode.ini"
+      },
+      {
+        "label": "Mini, with HK/US/JP groups ACL4SSR_Online_Mini_MultiCountry",
+        "value": "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/config/ACL4SSR_Online_Mini_MultiCountry.ini"
+      },
+      {
+        "label": "Full groups, for power users ACL4SSR_Online_Full",
+        "value": "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/config/ACL4SSR_Online_Full.ini"
+      },
+      {
+        "label": "Full groups, multi-mode, power users ACL4SSR_Online_Full_MultiMode",
+        "value": "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/config/ACL4SSR_Online_Full_MultiMode.ini"
+      },
+      {
+        "label": "Full groups, no auto speed-test, power users ACL4SSR_Online_Full_NoAuto",
+        "value": "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/config/ACL4SSR_Online_Full_NoAuto.ini"
+      },
+      {
+        "label": "Full groups, power users, extra ad-blocking ACL4SSR_Online_Full_AdblockPlus",
+        "value": "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/config/ACL4SSR_Online_Full_AdblockPlus.ini"
+      },
+      {
+        "label": "Full groups, power users, full Netflix ACL4SSR_Online_Full_Netflix",
+        "value": "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/config/ACL4SSR_Online_Full_Netflix.ini"
+      },
+      {
+        "label": "Full groups, power users, Google split ACL4SSR_Online_Full_Google",
+        "value": "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/config/ACL4SSR_Online_Full_Google.ini"
+      }
+    ]
+  },
+  {
+    "label": "CM personal rules",
+    "options": [
+      {
+        "label": "Default, HK/US regions CM_Online",
+        "value": "https://raw.githubusercontent.com/cmliu/ACL4SSR/refs/heads/main/Clash/config/ACL4SSR_Online.ini"
+      },
+      {
+        "label": "Mini, speed-test + failover + load-balance, CF-CDN aware CM_Online_Mini_MultiMode_CF",
+        "value": "https://raw.githubusercontent.com/cmliu/ACL4SSR/refs/heads/main/Clash/config/ACL4SSR_Online_Mini_MultiMode_CF.ini"
+      },
+      {
+        "label": "Mini, no auto speed-test (reduces -1 issues), CF-CDN aware CM_Online_Mini_NoAuto_CF",
+        "value": "https://raw.githubusercontent.com/cmliu/ACL4SSR/refs/heads/main/Clash/config/ACL4SSR_Online_Mini_NoAuto_CF.ini"
+      },
+      {
+        "label": "HK/US regions, load-balance CM_Online_MultiCountry",
+        "value": "https://raw.githubusercontent.com/cmliu/ACL4SSR/refs/heads/main/Clash/config/ACL4SSR_Online_MultiCountry.ini"
+      },
+      {
+        "label": "HK/US + CF-CDN, load-balance, for CF nodes CM_Online_MultiCountry_CF",
+        "value": "https://raw.githubusercontent.com/cmliu/ACL4SSR/refs/heads/main/Clash/config/ACL4SSR_Online_MultiCountry_CF.ini"
+      },
+      {
+        "label": "Multi-region groups CM_Online_Full",
+        "value": "https://raw.githubusercontent.com/cmliu/ACL4SSR/refs/heads/main/Clash/config/ACL4SSR_Online_Full.ini"
+      },
+      {
+        "label": "Multi-region + CF-CDN groups, for CF nodes CM_Online_Full_CF",
+        "value": "https://raw.githubusercontent.com/cmliu/ACL4SSR/refs/heads/main/Clash/config/ACL4SSR_Online_Full_CF.ini"
+      },
+      {
+        "label": "Multi-region, load-balance CM_Online_Full_MultiMode",
+        "value": "https://raw.githubusercontent.com/cmliu/ACL4SSR/refs/heads/main/Clash/config/ACL4SSR_Online_Full_MultiMode.ini"
+      },
+      {
+        "label": "Multi-region + CF-CDN, load-balance, for CF nodes CM_Online_Full_MultiMode_CF",
+        "value": "https://raw.githubusercontent.com/cmliu/ACL4SSR/refs/heads/main/Clash/config/ACL4SSR_Online_Full_MultiMode_CF.ini"
+      }
+    ]
+  }
+]

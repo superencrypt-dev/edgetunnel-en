@@ -30,6 +30,10 @@ async function serveEnglishPage(env, pageName, upstreamPath) {
 			if (cached) return new Response(cached, { status: 200, headers: { 'Content-Type': 'text/html; charset=UTF-8', 'Cache-Control': 'no-store' } });
 		}
 	} catch (e) { }
+	try {
+		const fromRepo = await fetch(enAssetsBase + pageName, { cf: { cacheTtl: 3600 } });
+		if (fromRepo.ok) return new Response(await fromRepo.text(), { status: 200, headers: { 'Content-Type': 'text/html; charset=UTF-8', 'Cache-Control': 'no-store' } });
+	} catch (e) { }
 	return fetch(pagesStaticSite + upstreamPath);
 }
 ///////////////////////////////////////////////////////Global constants and utility functions///////////////////////////////////////////////
@@ -102,14 +106,9 @@ export default {
 				const asset = await env.KV.get(assetName);
 				if (asset) return new Response(asset, { status: 200, headers: { 'Content-Type': assetType, 'Cache-Control': 'no-store' } });
 			} catch (e) { }
-			return new Response('Not Found', { status: 404 });
-		} else if (accessPath.startsWith('en/')) {// English translated assets (panel data + changelog)
-			const assetName = accessPath.slice(3);
-			if (!/^[\w.\-]+$/.test(assetName)) return new Response('Not Found', { status: 404 });
-			const assetType = assetName.endsWith('.json') ? 'application/json; charset=utf-8' : 'text/plain; charset=utf-8';
 			try {
-				const asset = await env.KV.get(assetName);
-				if (asset) return new Response(asset, { status: 200, headers: { 'Content-Type': assetType, 'Cache-Control': 'no-store' } });
+				const fromRepo = await fetch(enAssetsBase + assetName, { cf: { cacheTtl: 3600 } });
+				if (fromRepo.ok) return new Response(await fromRepo.text(), { status: 200, headers: { 'Content-Type': assetType, 'Cache-Control': 'no-store' } });
 			} catch (e) { }
 			return new Response('Not Found', { status: 404 });
 		} else if (adminPassword && upgradeHeader === 'websocket') {// WebSocket proxy
