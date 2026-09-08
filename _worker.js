@@ -94,6 +94,24 @@ export default {
 				}
 				if (requestFirst8Sum === targetFirst8Sum && requestUuid.slice(-12) === targetUuid.slice(-12)) return new Response(JSON.stringify({ Version: Number(String(Version).replace(/\D+/g, '')) }), { status: 200, headers: { 'Content-Type': 'application/json;charset=utf-8' } });
 			}
+		} else if (accessPath.startsWith('en/')) {// English translated assets (panel data + changelog)
+			const assetName = accessPath.slice(3);
+			if (!/^[\w.\-]+$/.test(assetName)) return new Response('Not Found', { status: 404 });
+			const assetType = assetName.endsWith('.json') ? 'application/json; charset=utf-8' : 'text/plain; charset=utf-8';
+			try {
+				const asset = await env.KV.get(assetName);
+				if (asset) return new Response(asset, { status: 200, headers: { 'Content-Type': assetType, 'Cache-Control': 'no-store' } });
+			} catch (e) { }
+			return new Response('Not Found', { status: 404 });
+		} else if (accessPath.startsWith('en/')) {// English translated assets (panel data + changelog)
+			const assetName = accessPath.slice(3);
+			if (!/^[\w.\-]+$/.test(assetName)) return new Response('Not Found', { status: 404 });
+			const assetType = assetName.endsWith('.json') ? 'application/json; charset=utf-8' : 'text/plain; charset=utf-8';
+			try {
+				const asset = await env.KV.get(assetName);
+				if (asset) return new Response(asset, { status: 200, headers: { 'Content-Type': assetType, 'Cache-Control': 'no-store' } });
+			} catch (e) { }
+			return new Response('Not Found', { status: 404 });
 		} else if (adminPassword && upgradeHeader === 'websocket') {// WebSocket proxy
 			const proxyContext = await getProxyParams(url, userID, defaultProxyIP, defaultProxyFallback);
 			log(`[WebSocket] hit request: ${url.pathname}${url.search}`);
@@ -110,7 +128,7 @@ export default {
 			return await handleXhttpRequest(request, userID, proxyContext);
 		} else {
 			if (url.protocol === 'http:') return Response.redirect(url.href.replace(`http://${url.hostname}`, `https://${url.hostname}`), 301);
-			if (!adminPassword) return fetch(pagesStaticSite + '/noADMIN').then(r => { const headers = new Headers(r.headers); headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate'); headers.set('Pragma', 'no-cache'); headers.set('Expires', '0'); return new Response(r.body, { status: 404, statusText: r.statusText, headers }) });
+			if (!adminPassword) return (async () => { let html = null; try { html = env.KV ? await env.KV.get('noADMIN_en.html') : null } catch (e) { } if (!html) { const r = await fetch(pagesStaticSite + '/noADMIN'); html = await r.text(); } return new Response(html, { status: 404, headers: { 'Content-Type': 'text/html; charset=UTF-8', 'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate' } }); })();
 			if (env.KV && typeof env.KV.get === 'function') {
 				const caseSensitiveAccessPath = url.pathname.slice(1);
 				if (caseSensitiveAccessPath === encryptionKey && encryptionKey !== 'DoNotModifyThisDefaultKeyChangeViaKEYVariable') {//quick sub
@@ -528,7 +546,7 @@ export default {
 					const authCookie = cookies.split(';').find(c => c.trim().startsWith('auth='))?.split('=')[1];
 					if (authCookie && authCookie == await MD5MD5(UA + encryptionKey + adminPassword)) return fetch(new Request('https://speed.cloudflare.com/locations', { headers: { 'Referer': 'https://speed.cloudflare.com/' } }));
 				} else if (accessPath === 'robots.txt') return new Response('User-agent: *\nDisallow: /', { status: 200, headers: { 'Content-Type': 'text/plain; charset=UTF-8' } });
-			} else if (!envUUID) return fetch(pagesStaticSite + '/noKV').then(r => { const headers = new Headers(r.headers); headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate'); headers.set('Pragma', 'no-cache'); headers.set('Expires', '0'); return new Response(r.body, { status: 404, statusText: r.statusText, headers }) });
+				} else if (!envUUID) return (async () => { let html = null; try { html = env.KV ? await env.KV.get('noKV_en.html') : null } catch (e) { } if (!html) { const r = await fetch(pagesStaticSite + '/noKV'); html = await r.text(); } return new Response(html, { status: 404, headers: { 'Content-Type': 'text/html; charset=UTF-8', 'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate' } }); })();
 		}
 
 		let fakePageURL = env.URL || 'nginx';
