@@ -11,6 +11,25 @@
 
 ---
 
+## 📚 Detailed Tutorials (Bahasa Indonesia)
+
+All guides live in the [`docs/`](docs/) directory:
+
+| Guide | Description |
+|---|---|
+| [Deploy via Dashboard — Workers](docs/install-dashboard-workers.md) | Easiest, no local tools |
+| [Deploy via Pages — Upload](docs/install-pages-upload.md) | Upload ZIP from dashboard |
+| [Deploy via Pages + GitHub](docs/install-pages-github.md) | Auto-deploy from your fork |
+| [Deploy via Wrangler CLI](docs/install-wrangler-cli.md) | Terminal-based deployment |
+| [Client setup](docs/clients.md) | v2rayN/NG, Clash, sing-box, Shadowrocket, iOS |
+| [Custom domain](docs/custom-domain.md) | Bind your own domain |
+| [Admin panel & post-install](docs/after-install.md) | Config, logs, KV keys, Telegram |
+| [Advanced usage](docs/advanced.md) | PATH proxy switching, env vars, tokens |
+
+Or start from the index: [docs/TUTORIALS.md](docs/TUTORIALS.md)
+
+---
+
 ## 📖 About the Project
 
 **edgetunnel** is an edge-computing tunnel solution built on the CF Workers/Pages platform. It handles network traffic efficiently and provides a powerful admin panel with flexible node configuration.
