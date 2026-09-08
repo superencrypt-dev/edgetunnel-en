@@ -30,12 +30,22 @@ Fork the repo, connect it to Pages, and every push auto-deploys.
 
 ## Step 5 — Install the English admin panel (recommended)
 
-```bash
-npx wrangler kv key put --binding KV 'admin_en.html' --path panel/admin_en.html --remote
-npx wrangler kv key put --binding KV 'login_en.html'  --path panel/login_en.html  --remote
-```
+### Via the Cloudflare dashboard (no terminal needed)
 
-> Replace `--binding KV` with your binding if you named it differently.
+1. Open the panel files in your browser and copy their full content:
+   - https://raw.githubusercontent.com/superencrypt-dev/edgetunnel-en/main/panel/admin_en.html
+   - https://raw.githubusercontent.com/superencrypt-dev/edgetunnel-en/main/panel/login_en.html
+2. Dashboard → **Storage & Databases** → **KV** → click the namespace bound as `KV`
+3. **Add entry** → key: `admin_en.html`, value: paste the copied content → **Add entry**
+4. Repeat with key `login_en.html` and the login content
+5. Hard-refresh your `/admin` page (Ctrl+Shift+R)
+
+> The files are large (admin ≈ 860 KB) — if your browser struggles to copy from the raw view,
+> use the "Raw" button and Ctrl+A → Ctrl+C, or download and open with a text editor.
+> If pasting is impossible for you, the [Wrangler CLI](install-wrangler-cli.md#step-6--install-the-english-admin-panel)
+> does the same in 2 commands.
+
+> The binding must be named `KV` — adjust the keys' location accordingly if you named it differently.
 
 ## Step 6 — Access
 

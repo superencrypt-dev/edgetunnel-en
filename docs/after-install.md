@@ -27,7 +27,8 @@ After that, everything is editable from the panel — no redeploy needed for mos
 
 ## English panel installation
 
-If the panel appears in Chinese, install the English assets:
+If the panel appears in Chinese, install the English assets — either via the
+dashboard KV editor (see [Dashboard Workers guide](install-dashboard-workers.md)) or via CLI:
 
 ```bash
 npx wrangler kv key put --binding KV 'admin_en.html' --path panel/admin_en.html --remote

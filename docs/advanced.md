@@ -49,7 +49,7 @@ Set in dashboard (Workers → Settings → Variables) or `wrangler.toml` `[vars]
 | `GO2SOCKS5` | ❌ | `*.example.com` | Domains forced through SOCKS5 (`,`-separated, `*` wildcard) |
 | `HOST` | ❌ | `a.com,b.com` | Additional hosts for subscriptions |
 | `PATH` | ❌ | `/secret` | Base path requirement for WebSocket connections |
-| `DEBUG` | ❌ | `1` | Verbose logging (visible via `wrangler tail`) |
+| `DEBUG` | ❌ | `1` | Verbose logging (CLI: `wrangler tail`; dashboard: your Worker → **Logs** → **Begin log stream**) |
 | `OFF_LOG` | ❌ | `1` | Disable KV operation logs |
 | `BEST_SUB` | ❌ | `1` | Act as a preferred-IP subscription generator |
 | `PRELOAD_RACE_DIAL` | ❌ | `1` | Pre-resolve A/AAAA via DoH and race-dial |

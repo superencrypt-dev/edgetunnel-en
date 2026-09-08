@@ -41,12 +41,20 @@ No local tools required. Everything happens in the Cloudflare dashboard.
 
 ## Step 5 — (Recommended) Install the English admin panel
 
-The panel is served from KV. From a terminal with Node.js:
+### Via the Cloudflare dashboard (no terminal needed)
 
-```bash
-npx wrangler kv key put --binding KV 'admin_en.html' --path panel/admin_en.html --remote
-npx wrangler kv key put --binding KV 'login_en.html'  --path panel/login_en.html  --remote
-```
+1. Open the panel files in your browser and copy their full content:
+   - https://raw.githubusercontent.com/superencrypt-dev/edgetunnel-en/main/panel/admin_en.html
+   - https://raw.githubusercontent.com/superencrypt-dev/edgetunnel-en/main/panel/login_en.html
+2. Dashboard → **Storage & Databases** → **KV** → click the namespace bound as `KV`
+3. **Add entry** → key: `admin_en.html`, value: paste the copied content → **Add entry**
+4. Repeat with key `login_en.html` and the login content
+5. Hard-refresh your `/admin` page (Ctrl+Shift+R)
+
+> The files are large (admin ≈ 860 KB) — if your browser struggles to copy from the raw view,
+> use the "Raw" button and Ctrl+A → Ctrl+C, or download and open with a text editor.
+> If pasting is impossible for you, the [Wrangler CLI](install-wrangler-cli.md#step-6--install-the-english-admin-panel)
+> does the same in 2 commands.
 
 (Skip this if you don't mind the panel being in Chinese — everything else works.)
 

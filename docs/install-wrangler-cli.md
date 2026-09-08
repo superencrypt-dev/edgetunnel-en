@@ -7,6 +7,8 @@ Full local control. Best if you already use the terminal.
 - Node.js 18+ (`node --version`)
 - A Cloudflare account
 
+> Prefer zero local tools? Use the [Dashboard Workers guide](install-dashboard-workers.md) instead — it needs only a browser.
+
 ## Step 1 — Clone and install
 
 ```bash
