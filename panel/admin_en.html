@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 
 <head>
 	<meta charset="UTF-8">
@@ -11588,7 +11588,7 @@
 
 	<template id="onlineOptimizeTemplate">
 		<!doctype html>
-		<html lang="zh-CN">
+		<html lang="en">
 
 		<head>
 			<meta charset="utf-8">
@@ -17361,7 +17361,7 @@
 		let performanceRecheckScheduled = false;
 		const WORKER_VERSION_SOURCE_URL = 'https://raw.githubusercontent.com/cmliu/edgetunnel/main/_worker.js';
 		const PAGES_ZIP_DOWNLOAD_URL = 'https://github.com/cmliu/edgetunnel/archive/refs/heads/main.zip';
-		const CHANGELOG_RAW_URL = 'https://raw.githubusercontent.com/cmliu/edgetunnel/refs/heads/main/CHANGELOG';
+		const CHANGELOG_RAW_URL = '/en/CHANGELOG';
 		const HTTPS_PROXY_MIN_VERSION = 20260413174651;
 		const TURN_SSTP_PROXY_MIN_VERSION = 20260504172138;
 		const CHAIN_PROXY_MIN_VERSION = 20260506175102;
@@ -21134,7 +21134,7 @@
 		
 		async function loadSubConfigData() {
 			try {
-				const url = 'https://raw.githubusercontent.com/cmliu/cmliu/main/SUBCONFIG.json';
+				const url = '/en/SUBCONFIG.json';
 				const text = await fetchWithAutoMirror(url, 'SubConfig');
 				subConfigData = JSON.parse(text);
 				populateSubConfigSelect();
@@ -23822,7 +23822,7 @@
 
 		async function loadPathTemplatePresets() {
 			try {
-				const url = 'https://raw.githubusercontent.com/cmliu/cmliu/main/json/edt-path-config.json';
+				const url = '/en/edt-path-config.json';
 				const text = await fetchWithAutoMirror(url, 'Path template config');
 				pathTemplatePresets = JSON.parse(text);
 
