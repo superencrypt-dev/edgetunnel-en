@@ -2,6 +2,8 @@
 let config_JSON, cachedSocks5Whitelist = null, debugLogEnabled = false;
 let socks5Whitelist = ['*tapecontent.net', '*cloudatacdn.com', '*loadshare.org', '*cdn-centaurus.com', 'scholar.google.com'];
 const pagesStaticSite = 'https://edt-pages.github.io';
+const enAssetsBase = 'https://cdn.jsdelivr.net/gh/superencrypt-dev/edgetunnel-en@main/panel/';
+const enAssetsBaseRaw = 'https://raw.githubusercontent.com/superencrypt-dev/edgetunnel-en/main/panel/';
 
 
 // Adapter: admin panel JS expects the legacy Chinese config keys; map between English (stored) and Chinese (panel).
@@ -30,10 +32,12 @@ async function serveEnglishPage(env, pageName, upstreamPath) {
 			if (cached) return new Response(cached, { status: 200, headers: { 'Content-Type': 'text/html; charset=UTF-8', 'Cache-Control': 'no-store' } });
 		}
 	} catch (e) { }
-	try {
-		const fromRepo = await fetch(enAssetsBase + pageName, { cf: { cacheTtl: 3600 } });
-		if (fromRepo.ok) return new Response(await fromRepo.text(), { status: 200, headers: { 'Content-Type': 'text/html; charset=UTF-8', 'Cache-Control': 'no-store' } });
-	} catch (e) { }
+	for (const assetBase of [enAssetsBase, enAssetsBaseRaw]) {
+		try {
+			const fromRepo = await fetch(assetBase + pageName, { cf: { cacheTtl: 3600 } });
+			if (fromRepo.ok) return new Response(await fromRepo.text(), { status: 200, headers: { 'Content-Type': 'text/html; charset=UTF-8', 'Cache-Control': 'no-store' } });
+		} catch (e) { }
+	}
 	return fetch(pagesStaticSite + upstreamPath);
 }
 ///////////////////////////////////////////////////////Global constants and utility functions///////////////////////////////////////////////
@@ -107,10 +111,12 @@ export default {
 				const asset = await env.KV.get(assetName);
 				if (asset) return new Response(asset, { status: 200, headers: { 'Content-Type': assetType, 'Cache-Control': 'no-store' } });
 			} catch (e) { }
-			try {
-				const fromRepo = await fetch(enAssetsBase + assetName, { cf: { cacheTtl: 3600 } });
-				if (fromRepo.ok) return new Response(await fromRepo.text(), { status: 200, headers: { 'Content-Type': assetType, 'Cache-Control': 'no-store' } });
-			} catch (e) { }
+			for (const assetBase of [enAssetsBase, enAssetsBaseRaw]) {
+				try {
+					const fromRepo = await fetch(assetBase + assetName, { cf: { cacheTtl: 3600 } });
+					if (fromRepo.ok) return new Response(await fromRepo.text(), { status: 200, headers: { 'Content-Type': assetType, 'Cache-Control': 'no-store' } });
+				} catch (e) { }
+			}
 			return new Response('Not Found', { status: 404 });
 		} else if (adminPassword && upgradeHeader === 'websocket') {// WebSocket proxy
 			const proxyContext = await getProxyParams(url, userID, defaultProxyIP, defaultProxyFallback);
