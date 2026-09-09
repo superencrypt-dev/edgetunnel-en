@@ -99,7 +99,8 @@ export default {
 				if (requestFirst8Sum === targetFirst8Sum && requestUuid.slice(-12) === targetUuid.slice(-12)) return new Response(JSON.stringify({ Version: Number(String(Version).replace(/\D+/g, '')) }), { status: 200, headers: { 'Content-Type': 'application/json;charset=utf-8' } });
 			}
 		} else if (accessPath.startsWith('en/')) {// English translated assets (panel data + changelog)
-			const assetName = accessPath.slice(3);
+			const assetAliases = { changelog: 'changelog_en.txt', 'subconfig.json': 'SUBCONFIG.json' };
+			const assetName = assetAliases[accessPath.slice(3)] || accessPath.slice(3);
 			if (!/^[\w.\-]+$/.test(assetName)) return new Response('Not Found', { status: 404 });
 			const assetType = assetName.endsWith('.json') ? 'application/json; charset=utf-8' : 'text/plain; charset=utf-8';
 			try {
