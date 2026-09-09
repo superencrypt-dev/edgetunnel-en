@@ -45,27 +45,7 @@
 - 🔄 **Subscription system**: auto-generated nodes, Clash / sing-box / Surge / Loon / Quantumult X auto-detection
 - ⚡ **Performance**: ProxyIP rotation, SOCKS5/HTTP(S)/TURN/SSTP chained proxies, preferred-IP APIs, race dialing
 - 🌐 **Multi-platform**: works with v2rayN, v2rayNG, Clash-family, Shadowrocket, Hiddify, Karing, and more
-- 🧾 **English changelog** and **Indonesian deployment tutorials** included
-
-## 📚 Manual Deployment Tutorials (Bahasa Indonesia)
-
-Prefer manual control over the one-click deploy? Pick a method — all in [`docs/`](docs/):
-
-| # | Method | Difficulty | Best for |
-|---|---|---|---|
-| 1 | [Cloudflare Dashboard — Workers](docs/install-dashboard-workers.md) | ⭐ Easiest | First-timers, browser only |
-| 2 | [Cloudflare Pages — Upload ZIP](docs/install-pages-upload.md) | ⭐ Easiest | Dashboard users who prefer Pages |
-| 3 | [Cloudflare Pages + GitHub](docs/install-pages-github.md) | ⭐⭐ | Auto-deploy on every push |
-| 4 | [Wrangler CLI](docs/install-wrangler-cli.md) | ⭐⭐ | Developers, terminal workflow |
-
-> Wrangler is optional — every guide has a no-CLI alternative (see the "I don't want to install Wrangler" table in [docs/TUTORIALS.md](docs/TUTORIALS.md)).
-
-After deployment:
-
-- [Client setup](docs/clients.md) — v2rayN/NG, Clash, sing-box, Shadowrocket, iOS
-- [Custom domain](docs/custom-domain.md) — bind your own domain
-- [Admin panel & post-install config](docs/after-install.md)
-- [Advanced usage](docs/advanced.md) — PATH proxy switching, environment variables, token math
+- 🧾 **English changelog** and **Bahasa Indonesia deployment guides** in [`docs/`](docs/)
 
 ## 🔑 Key Environment Variables
 
