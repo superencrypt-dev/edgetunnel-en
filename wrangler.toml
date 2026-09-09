@@ -2,6 +2,8 @@ name = "edgetunnel-en"
 main = "_worker.js"
 compatibility_date = "2025-11-04"
 keep_vars = true
+workers_dev = true
+preview_urls = false
 
 [vars]
 # Your node UUID (must be UUIDv4). Generate one: `cat /proc/sys/kernel/random/uuid`

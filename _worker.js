@@ -696,7 +696,7 @@ async function handleXhttpRequest(request, yourUUID, proxyContext = {}) {
 
 	let socket;
 	try {
-		socket = await forwardataTCP(firstPacket.hostname, firstPacket.port, firstPacket.rawData, placeholderWS, firstPacket.respHeader, remoteConnWrapper, yourUUID, request, proxyContext, firstPacket.protocol === 'trojan', firstPacket.rawData, true);
+		socket = await forwardataTCP(firstPacket.hostname, firstPacket.port, firstPacket.rawData, placeholderWS, firstPacket.respHeader, remoteConnWrapper, yourUUID, request, proxyContext, firstPacket.protocol === 'trojan', firstPacket.rawFirstPacketData, true);
 	} catch (err) {
 		log(`[XHTTP-Pipe] connection failed: ${err?.message || err}`);
 		cleanup(err);
@@ -792,10 +792,10 @@ function handleXhttpUdpRequest(firstPacket, reader, request, proxyContext, respo
 				if (firstPacket.protocol === 'trojan') {
 					trojanUdpContext.targetHost = firstPacket.hostname;
 					trojanUdpContext.targetport = firstPacket.port;
-					if (trojanUdpContext.proxyAddress) await forwardTrojanUdpData(firstPacket.rawData, xhttpBridge, trojanUdpContext, request);
+					if (trojanUdpContext.proxyAddress) await forwardTrojanUdpData(firstPacket.rawFirstPacketData, xhttpBridge, trojanUdpContext, request);
 				}
 				if (!(firstPacket.protocol === 'trojan' && trojanUdpContext.proxyAddress) && firstPacket.rawData?.byteLength) {
-					if (firstPacket.protocol === 'trojan') await forwardTrojanUdpData(firstPacket.rawData, xhttpBridge, trojanUdpContext, request);
+					if (firstPacket.protocol === 'trojan') await forwardTrojanUdpData(firstPacket.rawFirstPacketData, xhttpBridge, trojanUdpContext, request);
 					else await forwardataudp(firstPacket.rawData, xhttpBridge, udpRespHeader, request);
 					udpRespHeader = null;
 				}
@@ -919,7 +919,7 @@ async function readXhttpFirstPacket(reader, token) {
 				isUDP: cmd === 2,
 				rawData: data.subarray(headerLen),
 				respHeader: new Uint8Array([data[0], 0]),
-				rawData: null,
+				rawFirstPacketData: null,
 			}
 		};
 	};
@@ -980,7 +980,7 @@ async function readXhttpFirstPacket(reader, token) {
 				port,
 				isUDP,
 				rawData: data.subarray(dataOffset),
-				rawData: data,
+				rawFirstPacketData: data,
 				respHeader: null,
 			}
 		};
