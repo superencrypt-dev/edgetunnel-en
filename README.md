@@ -36,7 +36,8 @@
 - Panel: `https://<project-name>.<subdomain>.workers.dev/login` — password = *** `UUID` you entered
 - The **English panel works immediately** — no KV upload needed (the worker fetches the translated panel from this repo automatically)
 - Subscription link is shown in the panel → import into your client
-- Optional: add an `ADMIN` variable for a separate admin password, and a [custom domain](docs/custom-domain.md) (workers.dev is blocked by some ISPs)
+- Optional: add an `ADMIN` variable for a separate admin password
+- Recommended: bind a **custom domain** (workers.dev is blocked by some ISPs) — Workers → Settings → Domains & Routes → Add Custom Domain → use a **subdomain** (e.g. `proxy.yourdomain.com`, never the root domain)
 
 ## ✨ Features
 
@@ -45,26 +46,33 @@
 - 🔄 **Subscription system**: auto-generated nodes, Clash / sing-box / Surge / Loon / Quantumult X auto-detection
 - ⚡ **Performance**: ProxyIP rotation, SOCKS5/HTTP(S)/TURN/SSTP chained proxies, preferred-IP APIs, race dialing
 - 🌐 **Multi-platform**: works with v2rayN, v2rayNG, Clash-family, Shadowrocket, Hiddify, Karing, and more
-- 🧾 **English changelog** and **Bahasa Indonesia deployment guides** in [`docs/`](docs/)
+- 🧾 **English changelog** included
 
-## 🔑 Key Environment Variables
+## 🔑 Environment Variables
 
-| Variable | Required | Purpose |
-|---|---|---|
-| `UUID` | ❌ | Fixes the node UUID (UUIDv4); also the default admin password |
-| `ADMIN` | ❌ | Separate admin panel password (recommended) |
-| `PROXYIP` | ❌ | Global default ProxyIP |
-| `KEY` | ❌ | Changes the subscription token derivation |
-| `DEBUG` | ❌ | `1` = verbose logs via `wrangler tail` / dashboard log stream |
-
-Full list with all 14 variables: [docs/advanced.md](docs/advanced.md)
+| Variable | Required | Example | Purpose |
+|---|---|---|---|
+| `UUID` | ❌ | `90cd4a77-…` | Fix the node UUID (UUIDv4 only); also the default admin password |
+| `ADMIN` | ❌ | `123456` | Separate admin panel password (recommended) |
+| `KEY` | ❌ | `anything` | Quick-sub path key; changes the subscription token derivation |
+| `PROXYIP` | ❌ | `proxyip.example.net:443` | Global default ProxyIP |
+| `URL` | ❌ | `https://example.com` or `1101` | Fake-page address for unauthenticated visitors |
+| `GO2SOCKS5` | ❌ | `*.example.com` | Domains forced through SOCKS5 (`,`-separated, `*` wildcard) |
+| `HOST` | ❌ | `a.com,b.com` | Additional hosts for subscriptions |
+| `PATH` | ❌ | `/secret` | Base path requirement for WebSocket connections |
+| `DEBUG` | ❌ | `1` | Verbose logging (CLI `wrangler tail` or dashboard Logs) |
+| `OFF_LOG` | ❌ | `1` | Disable KV operation logs |
+| `BEST_SUB` | ❌ | `1` | Act as a preferred-IP subscription generator |
+| `PRELOAD_RACE_DIAL` | ❌ | `1` | Pre-resolve A/AAAA via DoH and race-dial |
+| `TCP_CONCURRENT_DIAL` | ❌ | `2` | Concurrent TCP dials (auto-drops to 1 on CN Mobile unless set) |
+| `PROXY_CONCURRENT_DIAL` | ❌ | `1` | Concurrent proxy dials |
 
 ## 🖼️ English Admin Panel
 
 The upstream project ships its panel in Chinese. This edition translates it —
 the panel files live in [`panel/`](panel/) and are loaded into KV during setup
 (two `wrangler kv key put` commands, or paste via the dashboard KV editor —
-[step-by-step](docs/install-dashboard-workers.md#step-5--recommended-install-the-english-admin-panel)).
+dashboard → Storage & Databases → KV → your namespace → Add entry (keys `admin_en.html` / `login_en.html`)).
 The worker serves them automatically; the panel JS is bridged to the English
 config schema by a built-in key adapter, so everything just works.
 
@@ -79,7 +87,7 @@ Per-request proxy switching via PATH — no redeploy needed:
 /trojan=1.2.3.4:1234
 ```
 
-See [docs/advanced.md](docs/advanced.md) for the full reference.
+Set per environment variable instead (see the table above) — no redeploy needed.
 
 ## 📄 License & Attribution
 
