@@ -20,6 +20,7 @@
    - **Project name** — becomes `<name>.<subdomain>.workers.dev`
    - **Select KV namespace** — choose **+ Create new** and name it (the `KV` binding is created automatically from wrangler.toml)
    - **UUID** — enter any UUIDv4 (generate: `cat /proc/sys/kernel/random/uuid`)
+   - **ADMIN** — your admin panel password (form defaults to a placeholder — change it before deploying!)
    - **Build command** — leave empty
    - Optional: check **Create private Git repository** to keep the copy in your GitHub private
 4. Click **Deploy** → done
@@ -36,7 +37,7 @@
 - Panel: `https://<project-name>.<subdomain>.workers.dev/login` — password = *** `UUID` you entered
 - The **English panel works immediately** — no KV upload needed (the worker fetches the translated panel from this repo automatically)
 - Subscription link is shown in the panel → import into your client
-- Optional: add an `ADMIN` variable for a separate admin password
+- `ADMIN` password — set it in the deploy form (editable later in Variables & Secrets)
 - Recommended: bind a **custom domain** (workers.dev is blocked by some ISPs) — Workers → Settings → Domains & Routes → Add Custom Domain → use a **subdomain** (e.g. `proxy.yourdomain.com`, never the root domain)
 
 ## ✨ Features

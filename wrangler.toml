@@ -8,6 +8,8 @@ preview_urls = false
 [vars]
 # Your node UUID (must be UUIDv4). Generate one: `cat /proc/sys/kernel/random/uuid`
 UUID = "00000000-0000-4000-8000-000000000000"
+# Your admin panel password (separate from the UUID - recommended). Change this!
+ADMIN = "changeme-admin-password"
 
 [[kv_namespaces]]
 binding = "KV"
