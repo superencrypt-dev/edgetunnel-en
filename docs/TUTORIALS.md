@@ -6,8 +6,12 @@ Pick the deployment method that fits you, then set up your client.
 
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/superencrypt-dev/edgetunnel-en)
 
-Clones this repo into your Cloudflare account, creates the Worker + KV automatically, and deploys.
-Afterwards: set the `UUID` variable and (optionally) install the English panel — 3 steps listed in the [README](../README.md#🚀-one-click-deploy).
+**Everything in one form:** Workers & Pages → Create → Continue with GitHub →
+**Clone a public repository via Git URL** → paste `https://github.com/superencrypt-dev/edgetunnel-en`
+→ fill **Project name**, **KV namespace** (+ Create new), **UUID**, leave Build command empty → Deploy.
+
+What it creates: a repo copy in your GitHub account (CI auto-deploy) + Worker + KV in Cloudflare.
+Panel English works immediately (fetched from this repo); full details in the [README](../README.md#-one-click-deploy).
 
 ## Deployment
 

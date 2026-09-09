@@ -43,10 +43,13 @@ No local tools required. Everything happens in the Cloudflare dashboard.
 
 ### Via the Cloudflare dashboard (no terminal needed)
 
-1. Open the panel files from your local clone (`panel/admin_en.html` and
-   `panel/login_en.html`) in a text editor and copy their full content
-   (clone first: `git clone https://github.com/superencrypt-dev/edgetunnel-en.git` — requires
-   your GitHub login since the repo is private)
+> 💡 This step is now **optional** — the worker automatically fetches the English
+> panel from this repository when the KV keys are missing. Installing them into KV
+> just removes the external dependency.
+
+1. Open the panel files in your browser and copy their full content:
+   - https://raw.githubusercontent.com/superencrypt-dev/edgetunnel-en/main/panel/admin_en.html
+   - https://raw.githubusercontent.com/superencrypt-dev/edgetunnel-en/main/panel/login_en.html
 2. Dashboard → **Storage & Databases** → **KV** → click the namespace bound as `KV`
 3. **Add entry** → key: `admin_en.html`, value: paste the copied content → **Add entry**
 4. Repeat with key `login_en.html` and the login content

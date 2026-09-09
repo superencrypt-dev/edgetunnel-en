@@ -11,19 +11,32 @@
 
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/superencrypt-dev/edgetunnel-en)
 
-Click the button, authorize Cloudflare with your GitHub account, and it will:
+**The fastest path — everything (Git repo, UUID, KV) is configured in one form:**
 
-1. Clone this repo into your Cloudflare account
-2. Create the Worker and the KV namespace automatically
-3. Deploy everything
+1. Click the button (or **Workers & Pages → Create → Continue with GitHub**)
+2. Pick your GitHub account → choose **Clone a public repository via Git URL** → paste:
+   `https://github.com/superencrypt-dev/edgetunnel-en`
+3. In the **Set up your application** form:
+   - **Project name** — becomes `<name>.<subdomain>.workers.dev`
+   - **Select KV namespace** — choose **+ Create new** and name it (the `KV` binding is created automatically from wrangler.toml)
+   - **UUID** — enter any UUIDv4 (generate: `cat /proc/sys/kernel/random/uuid`)
+   - **Build command** — leave empty
+   - Optional: check **Create private Git repository** to keep the copy in your GitHub private
+4. Click **Deploy** → done
 
-**After the deploy, finish these 3 steps:**
+**What the flow creates:**
 
-1. **Set your UUID** — Worker → Settings → Variables & Secrets → add `UUID` (any UUIDv4). Without it, clients can't connect.
-2. **Install the English panel** (optional) — dashboard KV editor, 2 copy-paste entries — see [panel install](docs/install-dashboard-workers.md#step-5--recommended-install-the-english-admin-panel)
-3. **Open** `https://<your-worker>.workers.dev/login` — password = your `UUID`
+| Where | What |
+|---|---|
+| Your GitHub account | A copy of this repo (CI connected — every push to it auto-redeploys) |
+| Your Cloudflare account | The Worker, a KV namespace, and the `UUID` variable |
 
-> If the automated KV provisioning fails, bind a KV namespace named `KV` manually (Settings → Bindings) and redeploy — details in [docs/install-dashboard-workers.md](docs/install-dashboard-workers.md).
+**After deploying:**
+
+- Panel: `https://<project-name>.<subdomain>.workers.dev/login` — password = *** `UUID` you entered
+- The **English panel works immediately** — no KV upload needed (the worker fetches the translated panel from this repo automatically)
+- Subscription link is shown in the panel → import into your client
+- Optional: add an `ADMIN` variable for a separate admin password, and a [custom domain](docs/custom-domain.md) (workers.dev is blocked by some ISPs)
 
 ## ✨ Features
 

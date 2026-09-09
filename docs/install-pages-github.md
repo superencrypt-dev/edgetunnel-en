@@ -4,6 +4,10 @@ Fork the repo, connect it to Pages, and every push auto-deploys.
 
 ## Step 1 — Fork the repository
 
+> 💡 **No fork?** The Create flow also accepts **Clone a public repository via Git URL** —
+> paste `https://github.com/superencrypt-dev/edgetunnel-en` instead of forking. This creates
+> a repo copy in your GitHub account automatically (same CI benefits).
+
 1. Log in to GitHub and open https://github.com/superencrypt-dev/edgetunnel-en
 2. Click **Fork** → **Create fork**
 3. Give the original a ⭐ Star while you're there 🙂
