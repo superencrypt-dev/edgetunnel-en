@@ -46,7 +46,6 @@
 - 🔄 **Subscription system**: auto-generated nodes, Clash / sing-box / Surge / Loon / Quantumult X auto-detection
 - ⚡ **Performance**: ProxyIP rotation, SOCKS5/HTTP(S)/TURN/SSTP chained proxies, preferred-IP APIs, race dialing
 - 🌐 **Multi-platform**: works with v2rayN, v2rayNG, Clash-family, Shadowrocket, Hiddify, Karing, and more
-- 🧾 **English changelog** included
 
 ## 🔑 Environment Variables
 
@@ -96,5 +95,5 @@ and inherits its [GNU General Public License](LICENSE). All credit for the origi
 architecture and design goes to **cmliu** and the upstream contributors.
 
 Changes in this edition: full English translation of the worker source, admin panel,
-docs, and changelog; a config-key adapter for panel compatibility; bilingual CSV
+docs, and a config-key adapter for panel compatibility; bilingual CSV
 preferred-IP parsing; and extra deployment documentation.
