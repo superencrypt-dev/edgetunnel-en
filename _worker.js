@@ -116,7 +116,7 @@ export default {
 							const Usage_JSON = await getCloudflareUsage(url.searchParams.get('Email'), url.searchParams.get('GlobalAPIKey'), url.searchParams.get('AccountID'), url.searchParams.get('APIToken'));
 							return new Response(JSON.stringify(Usage_JSON, null, 2), { status: 200, headers: { 'Content-Type': 'application/json' } });
 						} catch (err) {
-							const errorResponse = { msg: '查询请求量失败，失败原因：' + err.message, error: err.message };
+							const errorResponse = { msg: 'Failed to query usage: ' + err.message, error: err.message };
 							return new Response(JSON.stringify(errorResponse, null, 2), { status: 500, headers: { 'Content-Type': 'application/json;charset=utf-8' } });
 						}
 					} else if (区分大小写访问路径 === 'admin/getADDAPI') {// 验证优选API
@@ -129,14 +129,14 @@ export default {
 								优选API的IP = 优选API的IP.map(item => item.replace(/#(.+)$/, (_, remark) => '#' + decodeURIComponent(remark)));
 								return new Response(JSON.stringify({ success: true, data: 优选API的IP }, null, 2), { status: 200, headers: { 'Content-Type': 'application/json;charset=utf-8' } });
 							} catch (err) {
-								const errorResponse = { msg: '验证优选API失败，失败原因：' + err.message, error: err.message };
+								const errorResponse = { msg: 'Failed to verify preferred API: ' + err.message, error: err.message };
 								return new Response(JSON.stringify(errorResponse, null, 2), { status: 500, headers: { 'Content-Type': 'application/json;charset=utf-8' } });
 							}
 						}
 						return new Response(JSON.stringify({ success: false, data: [] }, null, 2), { status: 403, headers: { 'Content-Type': 'application/json;charset=utf-8' } });
 					} else if (访问路径 === 'admin/check') {// 代理检查
 						const 代理协议 = ['socks5', 'http', 'https', 'turn', 'sstp'].find(类型 => url.searchParams.has(类型)) || null;
-						if (!代理协议) return new Response(JSON.stringify({ error: '缺少代理参数' }), { status: 400, headers: { 'Content-Type': 'application/json;charset=utf-8' } });
+						if (!代理协议) return new Response(JSON.stringify({ error: 'Missing proxy parameter' }), { status: 400, headers: { 'Content-Type': 'application/json;charset=utf-8' } });
 						const 代理参数 = url.searchParams.get(代理协议);
 						const startTime = Date.now();
 						let 检测代理响应;
@@ -158,7 +158,7 @@ export default {
 												: (代理协议 === 'https' && isIPHostname(hostname)
 													? await httpsConnect(检测主机, 检测端口, new Uint8Array(0), TCP连接, checkParsed)
 													: await httpConnect(检测主机, 检测端口, new Uint8Array(0), 代理协议 === 'https', TCP连接, checkParsed));
-									if (!tcpSocket) throw new Error('无法连接到代理服务器');
+									if (!tcpSocket) throw new Error('Unable to connect to the proxy server');
 									tlsSocket = new TlsClient(tcpSocket, { serverName: 检测主机, insecure: true });
 									await tlsSocket.handshake();
 									await tlsSocket.write(encoder.encode(`GET /cdn-cgi/trace HTTP/1.1\r\nHost: ${检测主机}\r\nUser-Agent: Mozilla/5.0\r\nConnection: close\r\n\r\n`));
@@ -177,7 +177,7 @@ export default {
 												const statusLine = headers.split('\r\n')[0] || '';
 												const statusMatch = statusLine.match(/HTTP\/\d\.\d\s+(\d+)/);
 												const statusCode = statusMatch ? parseInt(statusMatch[1], 10) : NaN;
-												if (!Number.isFinite(statusCode) || statusCode < 200 || statusCode >= 300) throw new Error(`代理检测请求失败: ${statusLine || '无效响应'}`);
+												if (!Number.isFinite(statusCode) || statusCode < 200 || statusCode >= 300) throw new Error(`Proxy test request failed: ${statusLine || 'invalid response'}`);
 												const lengthMatch = headers.match(/\r\nContent-Length:\s*(\d+)/i);
 												if (lengthMatch) contentLength = parseInt(lengthMatch[1], 10);
 												chunked = /\r\nTransfer-Encoding:\s*chunked/i.test(headers);
@@ -186,11 +186,11 @@ export default {
 										if (headerEndIndex !== -1 && contentLength !== null && responseBuffer.length >= headerEndIndex + contentLength) break;
 										if (headerEndIndex !== -1 && chunked && decoder.decode(responseBuffer).includes('\r\n0\r\n\r\n')) break;
 									}
-									if (headerEndIndex === -1) throw new Error('代理检测响应头过长或无效');
+									if (headerEndIndex === -1) throw new Error('Invalid proxy test response headers');
 									const response = decoder.decode(responseBuffer);
 									const ip = response.match(/(?:^|\n)ip=(.*)/)?.[1];
 									const loc = response.match(/(?:^|\n)loc=(.*)/)?.[1];
-									if (!ip || !loc) throw new Error('代理检测响应无效');
+									if (!ip || !loc) throw new Error('Invalid proxy test response');
 									检测代理响应 = { success: true, proxy: 代理协议 + "://" + 完整代理参数, ip, loc, responseTime: Date.now() - startTime };
 								} finally {
 									try { tlsSocket ? tlsSocket.close() : await tcpSocket?.close?.() } catch (e) { }
@@ -213,7 +213,7 @@ export default {
 							config_JSON.init = '配置已重置为默认值';
 							return new Response(JSON.stringify(config_JSON, null, 2), { status: 200, headers: { 'Content-Type': 'application/json;charset=utf-8' } });
 						} catch (err) {
-							const errorResponse = { msg: '配置重置失败，失败原因：' + err.message, error: err.message };
+							const errorResponse = { msg: 'Failed to reset configuration: ' + err.message, error: err.message };
 							return new Response(JSON.stringify(errorResponse, null, 2), { status: 500, headers: { 'Content-Type': 'application/json;charset=utf-8' } });
 						}
 					} else if (request.method === 'POST') {// 处理 KV 操作（POST 请求）
@@ -221,15 +221,15 @@ export default {
 							try {
 								const newConfig = await request.json();
 								// 验证配置完整性
-								if (!newConfig.UUID || !newConfig.HOST) return new Response(JSON.stringify({ error: '配置不完整' }), { status: 400, headers: { 'Content-Type': 'application/json;charset=utf-8' } });
+								if (!newConfig.UUID || !newConfig.HOST) return new Response(JSON.stringify({ error: 'Incomplete configuration' }), { status: 400, headers: { 'Content-Type': 'application/json;charset=utf-8' } });
 
 								// 保存到 KV
 								await env.KV.put('config.json', JSON.stringify(newConfig, null, 2));
 								ctx.waitUntil(请求日志记录(env, request, 访问IP, 'Save_Config', config_JSON));
-								return new Response(JSON.stringify({ success: true, message: '配置已保存' }), { status: 200, headers: { 'Content-Type': 'application/json;charset=utf-8' } });
+								return new Response(JSON.stringify({ success: true, message: 'Configuration saved' }), { status: 200, headers: { 'Content-Type': 'application/json;charset=utf-8' } });
 							} catch (error) {
 								console.error('保存配置失败:', error);
-								return new Response(JSON.stringify({ error: '保存配置失败: ' + error.message }), { status: 500, headers: { 'Content-Type': 'application/json;charset=utf-8' } });
+								return new Response(JSON.stringify({ error: 'Failed to save configuration: ' + error.message }), { status: 500, headers: { 'Content-Type': 'application/json;charset=utf-8' } });
 							}
 						} else if (访问路径 === 'admin/cf.json') { // 保存cf.json配置
 							try {
@@ -245,17 +245,17 @@ export default {
 									} else if (newConfig.UsageAPI) {
 										CF_JSON.UsageAPI = newConfig.UsageAPI;
 									} else {
-										return new Response(JSON.stringify({ error: '配置不完整' }), { status: 400, headers: { 'Content-Type': 'application/json;charset=utf-8' } });
+										return new Response(JSON.stringify({ error: 'Incomplete configuration' }), { status: 400, headers: { 'Content-Type': 'application/json;charset=utf-8' } });
 									}
 								}
 
 								// 保存到 KV
 								await env.KV.put('cf.json', JSON.stringify(CF_JSON, null, 2));
 								ctx.waitUntil(请求日志记录(env, request, 访问IP, 'Save_Config', config_JSON));
-								return new Response(JSON.stringify({ success: true, message: '配置已保存' }), { status: 200, headers: { 'Content-Type': 'application/json;charset=utf-8' } });
+								return new Response(JSON.stringify({ success: true, message: 'Configuration saved' }), { status: 200, headers: { 'Content-Type': 'application/json;charset=utf-8' } });
 							} catch (error) {
 								console.error('保存配置失败:', error);
-								return new Response(JSON.stringify({ error: '保存配置失败: ' + error.message }), { status: 500, headers: { 'Content-Type': 'application/json;charset=utf-8' } });
+								return new Response(JSON.stringify({ error: 'Failed to save configuration: ' + error.message }), { status: 500, headers: { 'Content-Type': 'application/json;charset=utf-8' } });
 							}
 						} else if (访问路径 === 'admin/tg.json') { // 保存tg.json配置
 							try {
@@ -264,26 +264,26 @@ export default {
 									const TG_JSON = { BotToken: null, ChatID: null };
 									await env.KV.put('tg.json', JSON.stringify(TG_JSON, null, 2));
 								} else {
-									if (!newConfig.BotToken || !newConfig.ChatID) return new Response(JSON.stringify({ error: '配置不完整' }), { status: 400, headers: { 'Content-Type': 'application/json;charset=utf-8' } });
+									if (!newConfig.BotToken || !newConfig.ChatID) return new Response(JSON.stringify({ error: 'Incomplete configuration' }), { status: 400, headers: { 'Content-Type': 'application/json;charset=utf-8' } });
 									await env.KV.put('tg.json', JSON.stringify(newConfig, null, 2));
 								}
 								ctx.waitUntil(请求日志记录(env, request, 访问IP, 'Save_Config', config_JSON));
-								return new Response(JSON.stringify({ success: true, message: '配置已保存' }), { status: 200, headers: { 'Content-Type': 'application/json;charset=utf-8' } });
+								return new Response(JSON.stringify({ success: true, message: 'Configuration saved' }), { status: 200, headers: { 'Content-Type': 'application/json;charset=utf-8' } });
 							} catch (error) {
 								console.error('保存配置失败:', error);
-								return new Response(JSON.stringify({ error: '保存配置失败: ' + error.message }), { status: 500, headers: { 'Content-Type': 'application/json;charset=utf-8' } });
+								return new Response(JSON.stringify({ error: 'Failed to save configuration: ' + error.message }), { status: 500, headers: { 'Content-Type': 'application/json;charset=utf-8' } });
 							}
 						} else if (区分大小写访问路径 === 'admin/ADD.txt') { // 保存自定义优选IP
 							try {
 								const customIPs = await request.text();
 								await env.KV.put('ADD.txt', customIPs);// 保存到 KV
 								ctx.waitUntil(请求日志记录(env, request, 访问IP, 'Save_Custom_IPs', config_JSON));
-								return new Response(JSON.stringify({ success: true, message: '自定义IP已保存' }), { status: 200, headers: { 'Content-Type': 'application/json;charset=utf-8' } });
+								return new Response(JSON.stringify({ success: true, message: 'Custom IPs saved' }), { status: 200, headers: { 'Content-Type': 'application/json;charset=utf-8' } });
 							} catch (error) {
 								console.error('保存自定义IP失败:', error);
-								return new Response(JSON.stringify({ error: '保存自定义IP失败: ' + error.message }), { status: 500, headers: { 'Content-Type': 'application/json;charset=utf-8' } });
+								return new Response(JSON.stringify({ error: 'Failed to save custom IPs: ' + error.message }), { status: 500, headers: { 'Content-Type': 'application/json;charset=utf-8' } });
 							}
-						} else return new Response(JSON.stringify({ error: '不支持的POST请求路径' }), { status: 404, headers: { 'Content-Type': 'application/json;charset=utf-8' } });
+						} else return new Response(JSON.stringify({ error: 'Unsupported POST path' }), { status: 404, headers: { 'Content-Type': 'application/json;charset=utf-8' } });
 					} else if (访问路径 === 'admin/config.json') {// 处理 admin/config.json 请求，返回JSON
 						return new Response(JSON.stringify(config_JSON, null, 2), { status: 200, headers: { 'Content-Type': 'application/json' } });
 					} else if (区分大小写访问路径 === 'admin/ADD.txt') {// 处理 admin/ADD.txt 请求，返回本地优选IP
