@@ -1,5 +1,5 @@
 # 🚀 edgetunnel 2.1
-![后台页面](./img.png)
+![Admin Panel](./img.png)
 
 [![Stars](https://img.shields.io/github/stars/cmliu/edgetunnel?style=flat-square&logo=github)](https://github.com/cmliu/edgetunnel/stargazers)
 [![Forks](https://img.shields.io/github/forks/cmliu/edgetunnel?style=flat-square&logo=github)](https://github.com/cmliu/edgetunnel/network/members)
@@ -11,185 +11,185 @@
 
 ---
 
-## 📖 项目简介
+## 📖 Project Overview
 
-**edgetunnel** 是一个基于 CF Workers/Pages 平台的边缘计算隧道解密方案。它能够高效地处理网络流量，并提供强大的管理面板和灵活的节点配置能力。
+**edgetunnel** is an edge-computing tunnel decryption solution based on the CF Workers/Pages platform. It handles network traffic efficiently and provides a powerful admin panel with flexible node configuration capabilities.
 
-- 🖥️ **Demo 演示站点**：[https://EDT-Pages.github.io/admin](https://EDT-Pages.github.io/admin)
+- 🖥️ **Demo Site**: [https://EDT-Pages.github.io/admin](https://EDT-Pages.github.io/admin)
 
-### ✨ 核心特性
+### ✨ Core Features
 
-- 🛡️ **协议支持**：支持 VLESS、Trojan、Shadowsocks 等主流协议，深度集成加密传输。
-- 📊 **管理面板**：内置可视化后台，支持实时配置修改、日志查看及流量统计。
-- 🛠️ **部署灵活**：完整适配 CF Workers 及 CF Pages (GitHub / 上传)。
-- 🔄 **订阅系统**：内置自动订阅生成及混淆转换，适配主流客户端（Clash, Sing-box, Surge 等）。
-- ⚡ **性能加速**：支持自定义 ProxyIP、SOCKS5/HTTP 链式代理及优选 API，优化网络延迟。
-- 🌐 **多台适配**：完美适配 Windows, Android, iOS, MacOS 及各种软路由固件。
+- 🛡️ **Protocol Support**: Supports major protocols such as VLESS, Trojan, and Shadowsocks, with deep integration of encrypted transport.
+- 📊 **Admin Panel**: Built-in visual dashboard with live config edits, log viewing, and traffic statistics.
+- 🛠️ **Flexible Deployment**: Fully compatible with CF Workers and CF Pages (GitHub / Upload).
+- 🔄 **Subscription System**: Built-in automatic subscription generation and obfuscation conversion, compatible with popular clients (Clash, Sing-box, Surge, etc.).
+- ⚡ **Performance Boost**: Supports custom ProxyIP, SOCKS5/HTTP chained proxies, and preferred-IP APIs to optimize network latency.
+- 🌐 **Multi-Platform Support**: Works perfectly on Windows, Android, iOS, MacOS, and various router firmware.
 
 ---
 
-## 💡 快速部署
+## 💡 Quick Deploy
 >[!TIP]
-> 📖 **详尽图文教程**：[edgetunnel 部署指南](https://cmliussss.com/p/edt2/)
+> 📖 **Detailed guide with screenshots**: [edgetunnel deployment guide](https://cmliussss.com/p/edt2/)
 
 >[!WARNING]
-> ⚠️ **Error 1101问题**：[视频解析](https://www.youtube.com/watch?v=r4uVTEJptdE)
+> ⚠️ **Error 1101 issue**: [video explanation](https://www.youtube.com/watch?v=r4uVTEJptdE)
 
-### ⚙️ Workers 部署
+### ⚙️ Workers Deployment
 
 <details>
-<summary><code><strong>「 Workers 部署文字教程 」</strong></code></summary>
+<summary><code><strong>「 Workers deployment text guide 」</strong></code></summary>
 
-1. 部署 CF Worker：
-   - 在 CF Worker 控制台中创建一个新的 Worker。
-   - 将 [worker.js](https://github.com/cmliu/edgetunnel/blob/main/_worker.js) 的内容粘贴到 Worker 编辑器中。
-   - 在左侧的 `设置`选项卡中，选择 `变量` > `添加变量`。
-     变量名称填写**ADMIN**，值则为你的管理员密码，后点击 `保存`即可。
+1. Deploy a CF Worker:
+   - Create a new Worker in the CF Workers console.
+   - Paste the contents of [worker.js](https://github.com/cmliu/edgetunnel/blob/main/_worker.js) into the Worker editor.
+   - On the left `Settings` tab, go to `Variables` > `Add variable`.
+     Set the variable name to **ADMIN** and the value to your admin password, then click `Save`.
 
-2. 绑定 KV 命名空间：
-   - 在 `绑定`选项卡中选择 `添加绑定 +` > `KV 命名空间` > `添加绑定`，然后选择一个已有的命名空间或创建一个新的命名空间进行绑定。
-   - `变量名称`填写**KV**，然后点击 `添加绑定`即可。
+2. Bind a KV namespace:
+   - On the `Bindings` tab, choose `Add binding +` > `KV namespace` > `Add binding`, then select an existing namespace or create a new one.
+   - Set the `Variable name` to **KV**, then click `Add binding`.
 
-3. 给 Workers绑定 自定义域： 
-   - 在 workers控制台的 `触发器`选项卡，下方点击 `添加自定义域`。
-   - 填入你已转入 CF 域名解析服务的次级域名，例如:`vless.google.com`后 点击`添加自定义域`，等待证书生效即可。
+3. Bind a custom domain to the Worker:
+   - On the `Triggers` tab, click `Add custom domain` below.
+   - Enter a subdomain already on Cloudflare DNS, e.g. `vless.google.com`, then click `Add custom domain` and wait for the certificate to take effect.
 
-4. 访问后台：
-   - 访问 `https://vless.google.com/admin` 输入管理员密码即可登录后台。
+4. Open the admin panel:
+   - Visit `https://vless.google.com/admin` and enter the admin password to log in.
 
 </details>
 
-### 🛠 Pages 上传 部署方法 **最佳推荐!!!** [图文教程](https://cmliussss.com/p/edt2/)
+### 🛠 Pages Upload Deployment **Highly recommended!!!** [Guide with screenshots](https://cmliussss.com/p/edt2/)
 
 <details>
-<summary><code><strong>「 Pages 上传文件部署文字教程 」</strong></code></summary>
+<summary><code><strong>「 Pages file-upload deployment text guide 」</strong></code></summary>
 
-1. 部署 CF Pages：
-   - 下载 [main.zip](https://github.com/cmliu/edgetunnel/archive/refs/heads/main.zip) 文件，并点上 Star !!!
-   - 在 CF Pages 控制台中选择 `上传资产`后，为你的项目取名后点击 `创建项目`，然后上传你下载好的 [main.zip](https://github.com/cmliu/edgetunnel/archive/refs/heads/main.zip) 文件后点击 `部署站点`。
-   - 部署完成后点击 `继续处理站点` 后，选择 `设置` > `环境变量` > **制作**为生产环境定义变量 > `添加变量`。
-     变量名称填写**ADMIN**，值则为你的管理员密码，后点击 `保存`即可。
-   - 返回 `部署` 选项卡，在右下角点击 `创建新部署` 后，重新上传 [main.zip](https://github.com/cmliu/edgetunnel/archive/refs/heads/main.zip) 文件后点击 `保存并部署` 即可。
+1. Deploy CF Pages:
+   - Download the [main.zip](https://github.com/cmliu/edgetunnel/archive/refs/heads/main.zip) file, and give it a Star !!!
+   - In the CF Pages console, choose `Upload assets`, name your project and click `Create project`, then upload the [main.zip](https://github.com/cmliu/edgetunnel/archive/refs/heads/main.zip) file and click `Deploy site`.
+   - After deployment, click `Continue handling site`, then go to `Settings` > `Environment variables` > define variables for the **Production** environment > `Add variable`.
+     Set the variable name to **ADMIN** and the value to your admin password, then click `Save`.
+   - Go back to the `Deployments` tab, click `Create new deployment` at the bottom right, re-upload the [main.zip](https://github.com/cmliu/edgetunnel/archive/refs/heads/main.zip) file, then click `Save and deploy`.
 
-2. 绑定 KV 命名空间：
-   - 在 `设置`选项卡中选择 `绑定` > `+ 添加` > `KV 命名空间`，然后选择一个已有的命名空间或创建一个新的命名空间进行绑定。
-   - `变量名称`填写**KV**，然后点击 `保存`后重试部署即可。
+2. Bind a KV namespace:
+   - On the `Settings` tab, go to `Bindings` > `+ Add` > `KV namespace`, then select an existing namespace or create a new one.
+   - Set the `Variable name` to **KV**, then click `Save` and redeploy.
 
-3. 给 Pages绑定 CNAME自定义域：[视频教程](https://www.youtube.com/watch?v=LeT4jQUh8ok&t=851s)
-   - 在 Pages控制台的 `自定义域`选项卡，下方点击 `设置自定义域`。
-   - 填入你的自定义次级域名，注意不要使用你的根域名，例如：
-     您分配到的域名是 `fuck.cloudns.biz`，则添加自定义域填入 `lizi.fuck.cloudns.biz`即可；
-   - 按照 CF 的要求将返回你的域名DNS服务商，添加 该自定义域 `lizi`的 CNAME记录 `edgetunnel.pages.dev` 后，点击 `激活域`即可。
-   
-4. 访问后台：
-   - 访问 `https://lizi.fuck.cloudns.biz/admin` 输入管理员密码即可登录后台。
+3. Bind a CNAME custom domain to Pages: [video tutorial](https://www.youtube.com/watch?v=LeT4jQUh8ok&t=851s)
+   - On the Pages console `Custom domains` tab, click `Set up a custom domain` below.
+   - Enter your custom subdomain — do not use your root domain. For example:
+     If your assigned domain is `fuck.cloudns.biz`, enter `lizi.fuck.cloudns.biz` as the custom domain;
+   - As instructed by CF, go back to your DNS provider and add a CNAME record for `lizi` pointing to `edgetunnel.pages.dev`, then click `Activate domain`.
+
+4. Open the admin panel:
+   - Visit `https://lizi.fuck.cloudns.biz/admin` and enter the admin password to log in.
 
 </details>
 
-### 🛠 Pages + GitHub 部署方法
+### 🛠 Pages + GitHub Deployment
 
 <details>
-<summary><code><strong>「 Pages + GitHub 部署文字教程 」</strong></code></summary>
+<summary><code><strong>「 Pages + GitHub deployment text guide 」</strong></code></summary>
 
-1. 部署 CF Pages：
-   - 在 Github 上先 Fork 本项目，并点上 Star !!!
-   - 在 CF Pages 控制台中选择 `连接到 Git`后，选中 `edgetunnel`项目后点击 `开始设置`。
-   - 在 `设置构建和部署`页面下方，选择 `环境变量（高级）`后并 `添加变量`
-     变量名称填写**ADMIN**，值则为你的管理员密码，后点击 `保存并部署`即可。
+1. Deploy CF Pages:
+   - Fork this project on GitHub first, and give it a Star !!!
+   - In the CF Pages console, choose `Connect to Git`, select the `edgetunnel` project, then click `Get started`.
+   - On the `Set up builds and deployments` page, under `Environment variables (advanced)`, `Add variable`
+     with the name **ADMIN** and your admin password as the value, then click `Save and deploy`.
 
-2. 绑定 KV 命名空间：
-   - 在 `设置`选项卡中选择 `绑定` > `+ 添加` > `KV 命名空间`，然后选择一个已有的命名空间或创建一个新的命名空间进行绑定。
-   - `变量名称`填写**KV**，然后点击 `保存`后重试部署即可。
+2. Bind a KV namespace:
+   - On the `Settings` tab, go to `Bindings` > `+ Add` > `KV namespace`, then select an existing namespace or create a new one.
+   - Set the `Variable name` to **KV**, then click `Save` and redeploy.
 
-3. 给 Pages绑定 CNAME自定义域：[视频教程](https://www.youtube.com/watch?v=LeT4jQUh8ok&t=851s)
-   - 在 Pages控制台的 `自定义域`选项卡，下方点击 `设置自定义域`。
-   - 填入你的自定义次级域名，注意不要使用你的根域名，例如：
-     您分配到的域名是 `fuck.cloudns.biz`，则添加自定义域填入 `lizi.fuck.cloudns.biz`即可；
-   - 按照 CF 的要求将返回你的域名DNS服务商，添加 该自定义域 `lizi`的 CNAME记录 `edgetunnel.pages.dev` 后，点击 `激活域`即可。
+3. Bind a CNAME custom domain to Pages: [video tutorial](https://www.youtube.com/watch?v=LeT4jQUh8ok&t=851s)
+   - On the Pages console `Custom domains` tab, click `Set up a custom domain` below.
+   - Enter your custom subdomain — do not use your root domain. For example:
+     If your assigned domain is `fuck.cloudns.biz`, enter `lizi.fuck.cloudns.biz` as the custom domain;
+   - As instructed by CF, go back to your DNS provider and add a CNAME record for `lizi` pointing to `edgetunnel.pages.dev`, then click `Activate domain`.
 
-4. 访问后台：
-   - 访问 `https://lizi.fuck.cloudns.biz/admin` 输入管理员密码即可登录后台。
+4. Open the admin panel:
+   - Visit `https://lizi.fuck.cloudns.biz/admin` and enter the admin password to log in.
 
 </details>
 
 ---
 
-## 🔑 环境变量说明
+## 🔑 Environment Variables
 
-| 变量名 | 必填 | 示例 | 详细备注 |
+| Variable | Required | Example | Details |
 | :--- | :---: | :--- | :--- |
-| **ADMIN** | ✅ | `123456` | 后台管理面板登录密码 |
-| **KEY** | ❌ | `CMLiussss` | 快速订阅路径密钥，访问 `/CMLiussss` 即可快速获取节点 |
-| **UUID** | ❌ | `90cd4a77-141a-43c9-991b-08263cfe9c10` | 强制固定UUID，只支持**UUIDv4**标准格式 |
-| **PROXYIP** | ❌ | `proxyip.cmliussss.net:443` | 全局自定义反代 IP  |
-| **URL** | ❌ | `https://cloudflare-error-page-3th.pages.dev` | 默认主页伪装地址（可填写网页 URL 或 `1101`） |
-| **GO2SOCKS5** | ❌ | `blog.cmliussss.com`,`*.ip111.cn`,`*google.com` | 强制走 SOCKS5 的名单 (`*` 为全局，域名用逗号分隔) |
-| **DEBUG** | ❌ | `1`或`true` | **开发者模式**，默认**关闭**调试日志功能（console.log），设置`1`或`true`则**开启**调试日志功能 |
-| **OFF_LOG** | ❌ | `1`或`true` | 默认**开启**KV日志记录功能，设置`1`或`true`则**关闭**日志记录功能 |
-| **BEST_SUB** | ❌ | `1`或`true` | 默认**关闭**作为**优选订阅生成器**的功能，设置`1`或`true`则**开启**该功能 |
-| **PRELOAD_RACE_DIAL** | ❌ | `1`或`true` | 默认**关闭**作为**预加载竞速拨号**的功能，设置`1`或`true`则**开启**该功能 |
-| **TCP_CONCURRENT_DIAL**   | ❌ | `2` | **TCP 并发拨号数**，默认值为`2`；设置后不再根据中国移动网络自动降为单路 |
-| **PROXY_CONCURRENT_DIAL** | ❌ | `1` | **反代并发拨号数**，默认值为`1`；数值越高连接速度越快，但 IP 切换也越频繁 |
+| **ADMIN** | ✅ | `123456` | Admin panel login password |
+| **KEY** | ❌ | `CMLiussss` | Quick-subscription path key — visit `/CMLiussss` to fetch nodes quickly |
+| **UUID** | ❌ | `90cd4a77-141a-43c9-991b-08263cfe9c10` | Force a fixed UUID. Only standard **UUIDv4** format is supported |
+| **PROXYIP** | ❌ | `proxyip.cmliussss.net:443` | Global custom reverse-proxy IP |
+| **URL** | ❌ | `https://cloudflare-error-page-3th.pages.dev` | Default homepage disguise (a page URL, or `1101`) |
+| **GO2SOCKS5** | ❌ | `blog.cmliussss.com`,`*.ip111.cn`,`*google.com` | Force-SOCKS5 list (`*` = global, comma-separated domains) |
+| **DEBUG** | ❌ | `1` or `true` | **Developer mode**. Debug logging (console.log) is **off** by default; set `1` or `true` to turn it **on** |
+| **OFF_LOG** | ❌ | `1` or `true` | KV log recording is **on** by default; set `1` or `true` to turn it **off** |
+| **BEST_SUB** | ❌ | `1` or `true` | **Preferred-subscription generator** mode, **off** by default; set `1` or `true` to turn it **on** |
+| **PRELOAD_RACE_DIAL** | ❌ | `1` or `true` | **Preload race dialing**, **off** by default; set `1` or `true` to turn it **on** |
+| **TCP_CONCURRENT_DIAL**   | ❌ | `2` | **TCP concurrent dials**, default `2`. Once set, it no longer auto-drops to a single connection on China Mobile networks |
+| **PROXY_CONCURRENT_DIAL** | ❌ | `1` | **Reverse-proxy concurrent dials**, default `1`. Higher values connect faster but switch IPs more often |
 
 ---
 
-## 🔧 高级实用技巧
-如需修改 **订阅地址里的TOKEN** 和 **用于节点验证的UUID** ，可通过修改变量
-1. 修改`ADMIN`或`KEY`变量的值，可以随机修改 **订阅地址里的TOKEN** 和 **用于节点验证的UUID**
-2. 设置`UUID`变量可以强制固定 **订阅地址里的TOKEN** 和 **用于节点验证的UUID**，注意必须是**UUIDv4**标准格式，否则会导致节点无法使用。
+## 🔧 Advanced Tips
+To change the **TOKEN in subscription URLs** and the **UUID used for node auth**, edit variables:
+1. Changing `ADMIN` or `KEY` randomly regenerates the **TOKEN in subscription URLs** and the **UUID used for node auth**
+2. Setting `UUID` forces fixed values for both. It must be standard **UUIDv4** format, otherwise nodes will not work.
 
-本工具支持通过 **PATH路径** 动态切换底层代理方案：
+This tool can switch proxy schemes on the fly via the **PATH**:
 
-- 指定 `PROXYIP` 案例
+- Specify a `PROXYIP`, e.g.
    ```url
    /proxyip=proxyip.cmliussss.net
    /?proxyip=proxyip.cmliussss.net
    ```
 
-- 指定 `SOCKS5` 案例
+- Specify a `SOCKS5` proxy, e.g.
    ```url
    /socks5=user:password@127.0.0.1:1080
    /?socks5=user:password@127.0.0.1:1080
-   /socks://dXNlcjpwYXNzd29yZA==@127.0.0.1:1080 (默认激活全局SOCKS5)
-   /socks5://user:password@127.0.0.1:1080 (默认激活全局SOCKS5)
+   /socks://dXNlcjpwYXNzd29yZA==@127.0.0.1:1080 (enables global SOCKS5 by default)
+   /socks5://user:password@127.0.0.1:1080 (enables global SOCKS5 by default)
    ```
 
-- 指定 `HTTP代理` 案例
+- Specify an `HTTP` proxy, e.g.
    ```url
    /http=user:password@127.0.0.1:1080
-   /http://user:password@127.0.0.1:8080 (默认激活全局SOCKS5)
+   /http://user:password@127.0.0.1:8080 (enables global SOCKS5 by default)
    ```
 
-- 指定 `Trojan fallback` 案例（由于使用场景为自建对接, 仅 Trojan 入站，fallback 服务需为同密码、非 WebSocket、非 TLS. 此时 UDP 透传给 fallback, 性能优秀, 功能完整）
+- Specify a `Trojan fallback`, e.g. (built for self-hosted relay scenarios: Trojan inbound only, and the fallback service must share the password with no WebSocket and no TLS. UDP is passed through to the fallback with excellent performance and full features)
    ```url
    /trojan=1.1.1.1:1234
    ```
 
 ---
 
-## 💻 客户端适配情况
+## 💻 Client Compatibility
 
-| 平台 | 推荐客户端 |
+| Platform | Recommended clients |
 | :--- | :--- |
 | **Windows** | [v2rayN](https://github.com/2dust/v2rayN/releases)、[Hiddify](https://github.com/hiddify/hiddify-app/releases)、[FlClash](https://github.com/chen08209/FlClash/releases)、[mihomo-party](https://github.com/mihomo-party-org/clash-party/releases)、[Clash Verge Rev](https://github.com/clash-verge-rev/clash-verge-rev/releases)、[Clashmi](https://github.com/KaringX/clashmi/releases)、[FlyClash](https://github.com/GtxFury/FlyClash/releases)、[Karing](https://github.com/KaringX/karing/releases)、[Bettbox](https://github.com/appshubcc/Bettbox/releases) |
 | **Android** | [v2rayNG](https://github.com/2dust/v2rayNG/releases)、[ClashMetaForAndroid](https://github.com/MetaCubeX/ClashMetaForAndroid/releases/)、[FlClash](https://github.com/chen08209/FlClash/releases)、[Clashmi](https://github.com/KaringX/clashmi/releases)、[Hiddify](https://github.com/hiddify/hiddify-app/releases)、[NekoBox](https://github.com/MatsuriDayo/NekoBoxForAndroid/releases)、[FlyClash](https://github.com/GtxFury/FlyClash/releases)、[Karing](https://github.com/KaringX/karing/releases)、[Bettbox](https://github.com/appshubcc/Bettbox/releases) |
 | **iOS** | Surge、Shadowrocket、Stash、[Hiddify](https://github.com/hiddify/hiddify-app/releases)、Loon、Egern、[Clashmi](https://clashmi.app/download)、[Karing](https://karing.app/)、Quantumult X |
 | **macOS** | [FlClash](https://github.com/chen08209/FlClash/releases)、[mihomo-party](https://github.com/mihomo-party-org/clash-party/releases)、[Clash Verge Rev](https://github.com/clash-verge-rev/clash-verge-rev/releases)、Surge、[Clashmi](https://clashmi.app/download)、[Karing](https://karing.app/)、[FlyClash](https://github.com/GtxFury/FlyClash/releases) |
-| **鸿蒙** | [ClashBox](https://github.com/xiaobaigroup/ClashBox/releases) |
+| **HarmonyOS** | [ClashBox](https://github.com/xiaobaigroup/ClashBox/releases) |
 ---
 
-## ⭐ 项目热度
+## ⭐ Project Popularity
 
 ![Stargazers over time](https://github.com/cmliu/cmliu/blob/main/star/edgetunnel.svg)
 
 ---
 
-## 🙏 特别鸣谢
-### 💖 赞助支持 - 提供云服务器维持[订阅转换服务](https://sub.cmliussss.net/)
+## 🙏 Special Thanks
+### 💖 Sponsors - keeping the [subscription converter](https://sub.cmliussss.net/) servers running
 - [Yuusei Network](https://yuusei.io/)
 - [VMRack](https://www.vmrack.net?ref_code=5Zk7eNhbgL7)
 
-### 🛠 开源代码引用
+### 🛠 Open Source Credits
 - [zizifn/edgetunnel](https://github.com/zizifn/edgetunnel)
 - [3Kmfi6HP/EDtunnel](https://github.com/6Kmfi6HP/EDtunnel)
 - [SHIJS1999/cloudflare-worker-vless-ip](https://github.com/SHIJS1999/cloudflare-worker-vless-ip)
@@ -211,14 +211,14 @@
 
 ---
 
-## ⚠️ 免责声明
+## ⚠️ Disclaimer
 
-1. 本项目（"edgetunnel"）仅供**教育、科学研究及个人安全测试**之目的。
-2. 使用者在下载或使用本项目代码时，必须严格遵守所在地区的法律法规。
-3. 作者 **cmliu** 对任何滥用本项目代码导致的行为或后果均不承担任何责任。
-4. 本项目不对因使用代码引起的任何直接或间接损害负责。
-5. 建议在测试完成后 24 小时内删除本项目相关部署。
+1. This project ("edgetunnel") is for **educational, research, and personal security-testing** purposes only.
+2. Anyone downloading or using this code must strictly comply with the laws of their region.
+3. The author **cmliu** assumes no responsibility for any behavior or consequences arising from misuse of this code.
+4. This project is not liable for any direct or indirect damages caused by using the code.
+5. It is recommended to delete related deployments within 24 hours after testing.
 
 ---
 
-**如果您觉得项目对您有帮助，请给一个 Star 🌟，这是对我最大的鼓励！**
+**If this project helped you, please give it a Star 🌟 — it means a lot!**
