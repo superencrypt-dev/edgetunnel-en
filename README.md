@@ -1,224 +1,177 @@
-# 🚀 edgetunnel 2.1
-![Admin Panel](./img.png)
+# edgetunnel-en
 
-[![Stars](https://img.shields.io/github/stars/cmliu/edgetunnel?style=flat-square&logo=github)](https://github.com/cmliu/edgetunnel/stargazers)
-[![Forks](https://img.shields.io/github/forks/cmliu/edgetunnel?style=flat-square&logo=github)](https://github.com/cmliu/edgetunnel/network/members)
-[![License](https://img.shields.io/github/license/cmliu/edgetunnel?style=flat-square)](https://github.com/cmliu/edgetunnel/blob/main/LICENSE)
-[![Telegram](https://img.shields.io/badge/Telegram-Group-blue?style=flat-square&logo=telegram)](https://t.me/CMLiussss)
-[![YouTube](https://img.shields.io/badge/YouTube-Channel-red?style=flat-square&logo=youtube)](https://www.youtube.com/watch?v=LeT4jQUh8ok)
-[![zread](https://img.shields.io/badge/Ask_Zread-_.svg?style=flat-square&color=00b0aa&labelColor=000000&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTQuOTYxNTYgMS42MDAxSDIuMjQxNTZDMS44ODgxIDEuNjAwMSAxLjYwMTU2IDEuODg2NjQgMS42MDE1NiAyLjI0MDFWNC45NjAxQzEuNjAxNTYgNS4zMTM1NiAxLjg4ODEgNS42MDAxIDIuMjQxNTYgNS42MDAxSDQuOTYxNTZDNS4zMTUwMiA1LjYwMDEgNS42MDE1NiA1LjMxMzU2IDUuNjAxNTYgNC45NjAxVjIuMjQwMUM1LjYwMTU2IDEuODg2NjQgNS4zMTUwMiAxLjYwMDEgNC45NjE1NiAxLjYwMDFaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik00Ljk2MTU2IDEwLjM5OTlIMi4yNDE1NkMxLjg4ODEgMTAuMzk5OSAxLjYwMTU2IDEwLjY4NjQgMS42MDE1NiAxMS4wMzk5VjEzLjc1OTlDMS42MDE1NiAxNC4xMTM0IDEuODg4MSAxNC4zOTk5IDIuMjQxNTYgMTQuMzk5OUg0Ljk2MTU2QzUuMzE1MDIgMTQuMzk5OSA1LjYwMTU2IDE0LjExMzQgNS42MDE1NiAxMy43NTk5VjExLjAzOTlDNS42MDE1NiAxMC42ODY0IDUuMzE1MDIgMTAuMzk5OSA0Ljk2MTU2IDEwLjM5OTlaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik0xMy43NTg0IDEuNjAwMUgxMS4wMzg0QzEwLjY4NSAxLjYwMDEgMTAuMzk4NCAxLjg4NjY0IDEwLjM5ODQgMi4yNDAxVjQuOTYwMUMxMC4zOTg0IDUuMzEzNTYgMTAuNjg1IDUuNjAwMSAxMS4wMzg0IDUuNjAwMUgxMy43NTg0QzE0LjExMTkgNS42MDAxIDE0LjM5ODQgNS4zMTM1NiAxNC4zOTg0IDQuOTYwMVYyLjI0MDFDMTQuMzk4NCAxLjg4NjY0IDE0LjExMTkgMS42MDAxIDEzLjc1ODQgMS42MDAxWiIgZmlsbD0iI2ZmZiIvPgo8cGF0aCBkPSJNNCAxMkwxMiA0TDQgMTJaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik00IDEyTDEyIDQiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K&logoColor=ffffff)](https://zread.ai/cmliu/edgetunnel)
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/cmliu/edgetunnel)
+English edition of **edgetunnel**: a VLESS / Trojan / Shadowsocks edge tunnel running on Cloudflare Workers or Pages, with a visual admin panel and automatic subscription generation for popular proxy clients.
+
+> Based on [cmliu/edgetunnel](https://github.com/cmliu/edgetunnel) — see [Credits](#-credits) for full attribution.
 
 ---
 
-## 📖 Project Overview
+## 📖 What This Is
 
-**edgetunnel** is an edge-computing tunnel decryption solution based on the CF Workers/Pages platform. It handles network traffic efficiently and provides a powerful admin panel with flexible node configuration capabilities.
-
-- 🖥️ **Demo Site**: [https://EDT-Pages.github.io/admin](https://EDT-Pages.github.io/admin)
-
-### ✨ Core Features
-
-- 🛡️ **Protocol Support**: Supports major protocols such as VLESS, Trojan, and Shadowsocks, with deep integration of encrypted transport.
-- 📊 **Admin Panel**: Built-in visual dashboard with live config edits, log viewing, and traffic statistics.
-- 🛠️ **Flexible Deployment**: Fully compatible with CF Workers and CF Pages (GitHub / Upload).
-- 🔄 **Subscription System**: Built-in automatic subscription generation and obfuscation conversion, compatible with popular clients (Clash, Sing-box, Surge, etc.).
-- ⚡ **Performance Boost**: Supports custom ProxyIP, SOCKS5/HTTP chained proxies, and preferred-IP APIs to optimize network latency.
-- 🌐 **Multi-Platform Support**: Works perfectly on Windows, Android, iOS, MacOS, and various router firmware.
+- **Protocols**: VLESS, Trojan, Shadowsocks over WebSocket / XHTTP / gRPC, with TLS and AEAD support.
+- **Admin panel**: browser dashboard to edit node config, view logs, check chained proxies, and query Cloudflare usage.
+- **Subscriptions**: auto-generated links for Clash, Sing-box, Surge, v2rayN, Shadowrocket, and more, with optional obfuscation/conversion.
+- **Proxy chaining**: per-request switching between direct, custom ProxyIP, SOCKS5 / HTTP / HTTPS / TURN / SSTP upstreams, and Trojan fallback.
 
 ---
 
-## 💡 Quick Deploy
->[!TIP]
-> 📖 **Detailed guide with screenshots**: [edgetunnel deployment guide](https://cmliussss.com/p/edt2/)
+## ✅ Prerequisites
 
->[!WARNING]
-> ⚠️ **Error 1101 issue**: [video explanation](https://www.youtube.com/watch?v=r4uVTEJptdE)
+1. A Cloudflare account (free plan works).
+2. One **KV namespace** for logs and runtime data (bind it as variable `KV` after deploy).
+3. (Optional) A subdomain on Cloudflare DNS if you want a custom domain instead of `*.workers.dev` / `*.pages.dev`.
 
-### ⚙️ Workers Deployment
+---
 
-<details>
-<summary><code><strong>「 Workers deployment text guide 」</strong></code></summary>
+## 🚀 Deployment (pick one — all three recommended)
 
-1. Deploy a CF Worker:
-   - Create a new Worker in the CF Workers console.
-   - Paste the contents of [worker.js](https://github.com/cmliu/edgetunnel/blob/main/_worker.js) into the Worker editor.
-   - On the left `Settings` tab, go to `Variables` > `Add variable`.
-     Set the variable name to **ADMIN** and the value to your admin password, then click `Save`.
+### A. Cloudflare Workers (dashboard)
 
-2. Bind a KV namespace:
-   - On the `Bindings` tab, choose `Add binding +` > `KV namespace` > `Add binding`, then select an existing namespace or create a new one.
-   - Set the `Variable name` to **KV**, then click `Add binding`.
+1. In the Workers console, create a new Worker and open the editor.
+2. Paste the full contents of [`_worker.js`](./_worker.js) into the editor and **Deploy**.
+3. Go to `Settings` → `Variables` → `Add variable`: name `ADMIN`, value = your admin password → `Save`.
+4. Go to `Bindings` → `Add binding` → `KV namespace`: variable name `KV`, select or create a namespace → `Add binding`.
+5. (Optional) `Triggers` → `Add custom domain`, e.g. `vless.example.com`, and wait for the certificate.
+6. Open `https://<your-domain>/login` and sign in.
 
-3. Bind a custom domain to the Worker:
-   - On the `Triggers` tab, click `Add custom domain` below.
-   - Enter a subdomain already on Cloudflare DNS, e.g. `vless.google.com`, then click `Add custom domain` and wait for the certificate to take effect.
+### B. Cloudflare Pages — Upload assets (no Git needed)
 
-4. Open the admin panel:
-   - Visit `https://vless.google.com/admin` and enter the admin password to log in.
+1. Download this repo as a ZIP (`Code` → `Download ZIP` on GitHub).
+2. In the Pages console choose `Upload assets`, name the project (e.g. `edgetunnel`), upload the ZIP → `Deploy site`.
+3. `Settings` → `Environment variables` → define for **Production**: `ADMIN` = your admin password → `Save`.
+4. `Deployments` → `Create deployment`, re-upload the same ZIP → `Save and deploy`.
+5. `Settings` → `Bindings` → `Add` → `KV namespace`: variable name `KV` → `Save`, then retry the deployment.
+6. (Optional) `Custom domains` → `Set up a custom domain` with a subdomain (not your apex domain), add the requested CNAME at your DNS provider → `Activate domain`.
+7. Open `https://<your-domain>/login` and sign in.
 
-</details>
+### C. Cloudflare Pages — Connect to Git
 
-### 🛠 Pages Upload Deployment **Highly recommended!!!** [Guide with screenshots](https://cmliussss.com/p/edt2/)
+1. Fork this repo to your own GitHub account.
+2. In the Pages console choose `Connect to Git`, select the forked repo → `Begin setup`.
+3. Under `Environment variables (advanced)` add `ADMIN` = your admin password → `Save and Deploy`.
+4. Bind KV (`Settings` → `Bindings` → `KV namespace`, variable name `KV`) and redeploy.
+5. (Optional) add a custom domain as in method B, step 6.
+6. Open `https://<your-domain>/login` and sign in.
 
-<details>
-<summary><code><strong>「 Pages file-upload deployment text guide 」</strong></code></summary>
+### D. Wrangler CLI (alternative)
 
-1. Deploy CF Pages:
-   - Download the [main.zip](https://github.com/cmliu/edgetunnel/archive/refs/heads/main.zip) file, and give it a Star !!!
-   - In the CF Pages console, choose `Upload assets`, name your project and click `Create project`, then upload the [main.zip](https://github.com/cmliu/edgetunnel/archive/refs/heads/main.zip) file and click `Deploy site`.
-   - After deployment, click `Continue handling site`, then go to `Settings` > `Environment variables` > define variables for the **Production** environment > `Add variable`.
-     Set the variable name to **ADMIN** and the value to your admin password, then click `Save`.
-   - Go back to the `Deployments` tab, click `Create new deployment` at the bottom right, re-upload the [main.zip](https://github.com/cmliu/edgetunnel/archive/refs/heads/main.zip) file, then click `Save and deploy`.
+This repo ships a [`wrangler.toml`](./wrangler.toml) (`keep_vars = true`, so dashboard variables survive redeploys):
 
-2. Bind a KV namespace:
-   - On the `Settings` tab, go to `Bindings` > `+ Add` > `KV namespace`, then select an existing namespace or create a new one.
-   - Set the `Variable name` to **KV**, then click `Save` and redeploy.
+```bash
+wrangler login
+wrangler deploy
+```
 
-3. Bind a CNAME custom domain to Pages: [video tutorial](https://www.youtube.com/watch?v=LeT4jQUh8ok&t=851s)
-   - On the Pages console `Custom domains` tab, click `Set up a custom domain` below.
-   - Enter your custom subdomain — do not use your root domain. For example:
-     If your assigned domain is `fuck.cloudns.biz`, enter `lizi.fuck.cloudns.biz` as the custom domain;
-   - As instructed by CF, go back to your DNS provider and add a CNAME record for `lizi` pointing to `edgetunnel.pages.dev`, then click `Activate domain`.
-
-4. Open the admin panel:
-   - Visit `https://lizi.fuck.cloudns.biz/admin` and enter the admin password to log in.
-
-</details>
-
-### 🛠 Pages + GitHub Deployment
-
-<details>
-<summary><code><strong>「 Pages + GitHub deployment text guide 」</strong></code></summary>
-
-1. Deploy CF Pages:
-   - Fork this project on GitHub first, and give it a Star !!!
-   - In the CF Pages console, choose `Connect to Git`, select the `edgetunnel` project, then click `Get started`.
-   - On the `Set up builds and deployments` page, under `Environment variables (advanced)`, `Add variable`
-     with the name **ADMIN** and your admin password as the value, then click `Save and deploy`.
-
-2. Bind a KV namespace:
-   - On the `Settings` tab, go to `Bindings` > `+ Add` > `KV namespace`, then select an existing namespace or create a new one.
-   - Set the `Variable name` to **KV**, then click `Save` and redeploy.
-
-3. Bind a CNAME custom domain to Pages: [video tutorial](https://www.youtube.com/watch?v=LeT4jQUh8ok&t=851s)
-   - On the Pages console `Custom domains` tab, click `Set up a custom domain` below.
-   - Enter your custom subdomain — do not use your root domain. For example:
-     If your assigned domain is `fuck.cloudns.biz`, enter `lizi.fuck.cloudns.biz` as the custom domain;
-   - As instructed by CF, go back to your DNS provider and add a CNAME record for `lizi` pointing to `edgetunnel.pages.dev`, then click `Activate domain`.
-
-4. Open the admin panel:
-   - Visit `https://lizi.fuck.cloudns.biz/admin` and enter the admin password to log in.
-
-</details>
+Then set the `ADMIN` variable and the `KV` binding in the dashboard (`Settings` → `Variables` / `Bindings`).
 
 ---
 
 ## 🔑 Environment Variables
 
-| Variable | Required | Example | Details |
+Only `ADMIN` is required. The rest tune behavior:
+
+| Variable | Required | Example | Description |
 | :--- | :---: | :--- | :--- |
-| **ADMIN** | ✅ | `123456` | Admin panel login password |
-| **KEY** | ❌ | `CMLiussss` | Quick-subscription path key — visit `/CMLiussss` to fetch nodes quickly |
-| **UUID** | ❌ | `90cd4a77-141a-43c9-991b-08263cfe9c10` | Force a fixed UUID. Only standard **UUIDv4** format is supported |
-| **PROXYIP** | ❌ | `proxyip.cmliussss.net:443` | Global custom reverse-proxy IP |
-| **URL** | ❌ | `https://cloudflare-error-page-3th.pages.dev` | Default homepage disguise (a page URL, or `1101`) |
-| **GO2SOCKS5** | ❌ | `blog.cmliussss.com`,`*.ip111.cn`,`*google.com` | Force-SOCKS5 list (`*` = global, comma-separated domains) |
-| **DEBUG** | ❌ | `1` or `true` | **Developer mode**. Debug logging (console.log) is **off** by default; set `1` or `true` to turn it **on** |
-| **OFF_LOG** | ❌ | `1` or `true` | KV log recording is **on** by default; set `1` or `true` to turn it **off** |
-| **BEST_SUB** | ❌ | `1` or `true` | **Preferred-subscription generator** mode, **off** by default; set `1` or `true` to turn it **on** |
-| **PRELOAD_RACE_DIAL** | ❌ | `1` or `true` | **Preload race dialing**, **off** by default; set `1` or `true` to turn it **on** |
-| **TCP_CONCURRENT_DIAL**   | ❌ | `2` | **TCP concurrent dials**, default `2`. Once set, it no longer auto-drops to a single connection on China Mobile networks |
-| **PROXY_CONCURRENT_DIAL** | ❌ | `1` | **Reverse-proxy concurrent dials**, default `1`. Higher values connect faster but switch IPs more often |
+| `ADMIN` | ✅ | `change-me-strong-password` | Admin panel login password. Also accepts `PASSWORD`, `password`, `pswd`, `TOKEN`, `KEY`, `UUID` as aliases |
+| `KEY` | ❌ | `my-secret-key` | Quick-subscription path key — visiting `/<KEY>` redirects to your subscription link |
+| `UUID` | ❌ | `90cd4a77-141a-43c9-991b-08263cfe9c10` | Force a fixed UUID (standard **UUIDv4** only, otherwise nodes break) |
+| `PROXYIP` | ❌ | `proxyip.example.com:443` | Global custom reverse-proxy IP / domain |
+| `URL` | ❌ | `https://example.com` | Homepage disguise URL (default: built-in nginx page; `1101` also accepted) |
+| `GO2SOCKS5` | ❌ | `blog.example.com,*.example.net,*google.com` | Force-SOCKS5 list, comma-separated (`*` = global). Appended to the built-in list |
+| `DEBUG` | ❌ | `1` or `true` | Developer mode: enables console debug logging (off by default) |
+| `OFF_LOG` | ❌ | `1` or `true` | Disables KV log recording (logging is on by default) |
+| `BEST_SUB` | ❌ | `1` or `true` | Preferred-subscription generator mode (off by default) |
+| `PRELOAD_RACE_DIAL` | ❌ | `1` or `true` | Preload race dialing for first-time direct dials (off by default) |
+| `TCP_CONCURRENT_DIAL` | ❌ | `2` | Concurrent TCP dials (default `2`; pins the value instead of auto-downgrading) |
+| `PROXY_CONCURRENT_DIAL` | ❌ | `1` | Concurrent reverse-proxy dials (default `1`; higher = faster but rotates IPs more) |
+
+Changing `ADMIN` or `KEY` regenerates the subscription TOKEN and node UUID. Setting `UUID` pins both.
 
 ---
 
-## 🔧 Advanced Tips
-To change the **TOKEN in subscription URLs** and the **UUID used for node auth**, edit variables:
-1. Changing `ADMIN` or `KEY` randomly regenerates the **TOKEN in subscription URLs** and the **UUID used for node auth**
-2. Setting `UUID` forces fixed values for both. It must be standard **UUIDv4** format, otherwise nodes will not work.
+## 💻 Usage
 
-This tool can switch proxy schemes on the fly via the **PATH**:
+### 1. Admin panel
 
-- Specify a `PROXYIP`, e.g.
-   ```url
-   /proxyip=proxyip.cmliussss.net
-   /?proxyip=proxyip.cmliussss.net
-   ```
+- Open `https://<your-domain>/login`, enter the `ADMIN` password → redirected to `/admin`.
+- From the panel you can: edit node/subscription config, inspect logs (stored in KV as `log.json`, viewable at `/admin/log.json`), test chained proxies (`/admin/check?socks5=…` / `http` / `https` / `turn` / `sstp`), and query Cloudflare account usage (needs Email + Global API Key or API Token + Account ID).
+- The login cookie lasts 24 hours (`auth`, HttpOnly, Secure, SameSite=Lax).
 
-- Specify a `SOCKS5` proxy, e.g.
-   ```url
-   /socks5=user:password@127.0.0.1:1080
-   /?socks5=user:password@127.0.0.1:1080
-   /socks://dXNlcjpwYXNzd29yZA==@127.0.0.1:1080 (enables global SOCKS5 by default)
-   /socks5://user:password@127.0.0.1:1080 (enables global SOCKS5 by default)
-   ```
+### 2. Subscriptions
 
-- Specify an `HTTP` proxy, e.g.
-   ```url
-   /http=user:password@127.0.0.1:1080
-   /http://user:password@127.0.0.1:8080 (enables global SOCKS5 by default)
-   ```
+- Quick link: `https://<your-domain>/<KEY>` → 302 redirect to `/sub?token=…`.
+- Paste the final `/sub?...` URL into your client as a subscription link. The panel shows ready-to-copy links per client format (Clash / Sing-box / Base64 / Surge / …).
+- Per-client conversion options (UDP, XUDP, TLS 1.3, node sorting, …) are configured in the panel and passed through to the converter backend.
 
-- Specify a `Trojan fallback`, e.g. (built for self-hosted relay scenarios: Trojan inbound only, and the fallback service must share the password with no WebSocket and no TLS. UDP is passed through to the fallback with excellent performance and full features)
-   ```url
-   /trojan=1.1.1.1:1234
-   ```
+### 3. Per-request proxy switching via PATH
+
+Append one of these to any node path (works as `/xxx=…` or `/?xxx=…`):
+
+```url
+/proxyip=proxyip.example.com
+/?proxyip=proxyip.example.com
+```
+
+```url
+/socks5=user:password@127.0.0.1:1080
+/socks://dXNlcjpwYXNzd29yZA==@127.0.0.1:1080   (enables global SOCKS5)
+/socks5://user:password@127.0.0.1:1080          (enables global SOCKS5)
+```
+
+```url
+/http=user:password@127.0.0.1:1080
+/http://user:password@127.0.0.1:8080           (enables global SOCKS5)
+```
+
+Trojan fallback (self-hosted relay: Trojan inbound only; the fallback must share the password, no WebSocket, no TLS — UDP is passed through to the fallback):
+
+```url
+/trojan=1.1.1.1:1234
+```
+
+### 4. Homepage disguise
+
+Visitors hitting `/` without a valid path see the disguise page: the `URL` variable target, or the built-in nginx page by default.
 
 ---
 
-## 💻 Client Compatibility
+## 🖥️ Client Compatibility
 
 | Platform | Recommended clients |
 | :--- | :--- |
-| **Windows** | [v2rayN](https://github.com/2dust/v2rayN/releases)、[Hiddify](https://github.com/hiddify/hiddify-app/releases)、[FlClash](https://github.com/chen08209/FlClash/releases)、[mihomo-party](https://github.com/mihomo-party-org/clash-party/releases)、[Clash Verge Rev](https://github.com/clash-verge-rev/clash-verge-rev/releases)、[Clashmi](https://github.com/KaringX/clashmi/releases)、[FlyClash](https://github.com/GtxFury/FlyClash/releases)、[Karing](https://github.com/KaringX/karing/releases)、[Bettbox](https://github.com/appshubcc/Bettbox/releases) |
-| **Android** | [v2rayNG](https://github.com/2dust/v2rayNG/releases)、[ClashMetaForAndroid](https://github.com/MetaCubeX/ClashMetaForAndroid/releases/)、[FlClash](https://github.com/chen08209/FlClash/releases)、[Clashmi](https://github.com/KaringX/clashmi/releases)、[Hiddify](https://github.com/hiddify/hiddify-app/releases)、[NekoBox](https://github.com/MatsuriDayo/NekoBoxForAndroid/releases)、[FlyClash](https://github.com/GtxFury/FlyClash/releases)、[Karing](https://github.com/KaringX/karing/releases)、[Bettbox](https://github.com/appshubcc/Bettbox/releases) |
-| **iOS** | Surge、Shadowrocket、Stash、[Hiddify](https://github.com/hiddify/hiddify-app/releases)、Loon、Egern、[Clashmi](https://clashmi.app/download)、[Karing](https://karing.app/)、Quantumult X |
-| **macOS** | [FlClash](https://github.com/chen08209/FlClash/releases)、[mihomo-party](https://github.com/mihomo-party-org/clash-party/releases)、[Clash Verge Rev](https://github.com/clash-verge-rev/clash-verge-rev/releases)、Surge、[Clashmi](https://clashmi.app/download)、[Karing](https://karing.app/)、[FlyClash](https://github.com/GtxFury/FlyClash/releases) |
+| **Windows** | [v2rayN](https://github.com/2dust/v2rayN/releases), [Hiddify](https://github.com/hiddify/hiddify-app/releases), [FlClash](https://github.com/chen08209/FlClash/releases), [mihomo-party](https://github.com/mihomo-party-org/clash-party/releases), [Clash Verge Rev](https://github.com/clash-verge-rev/clash-verge-rev/releases), [Karing](https://github.com/KaringX/karing/releases) |
+| **Android** | [v2rayNG](https://github.com/2dust/v2rayNG/releases), [ClashMetaForAndroid](https://github.com/MetaCubeX/ClashMetaForAndroid/releases/), [FlClash](https://github.com/chen08209/FlClash/releases), [NekoBox](https://github.com/MatsuriDayo/NekoBoxForAndroid/releases), [Hiddify](https://github.com/hiddify/hiddify-app/releases), [Karing](https://github.com/KaringX/karing/releases) |
+| **iOS** | Surge, Shadowrocket, Stash, [Hiddify](https://github.com/hiddify/hiddify-app/releases), Loon, Egern, Quantumult X |
+| **macOS** | [FlClash](https://github.com/chen08209/FlClash/releases), [mihomo-party](https://github.com/mihomo-party-org/clash-party/releases), [Clash Verge Rev](https://github.com/clash-verge-rev/clash-verge-rev/releases), Surge |
 | **HarmonyOS** | [ClashBox](https://github.com/xiaobaigroup/ClashBox/releases) |
----
-
-## ⭐ Project Popularity
-
-![Stargazers over time](https://github.com/cmliu/cmliu/blob/main/star/edgetunnel.svg)
 
 ---
 
-## 🙏 Special Thanks
-### 💖 Sponsors - keeping the [subscription converter](https://sub.cmliussss.net/) servers running
-- [Yuusei Network](https://yuusei.io/)
-- [VMRack](https://www.vmrack.net?ref_code=5Zk7eNhbgL7)
+## 🛠️ Troubleshooting
 
-### 🛠 Open Source Credits
-- [zizifn/edgetunnel](https://github.com/zizifn/edgetunnel)
-- [3Kmfi6HP/EDtunnel](https://github.com/6Kmfi6HP/EDtunnel)
-- [SHIJS1999/cloudflare-worker-vless-ip](https://github.com/SHIJS1999/cloudflare-worker-vless-ip)
-- [Stanley-baby](https://github.com/Stanley-baby)
-- [ACL4SSR](https://github.com/ACL4SSR/ACL4SSR/tree/master/Clash/config)
-- [股神](https://t.me/CF_NAT/38889)
-- [Workers/Pages Metrics](https://t.me/zhetengsha/3382)
-- [白嫖哥](https://t.me/bestcfipas)
-- [Mingyu](https://github.com/ymyuuu/workers-vless)
-- [ToiCF/CF-Workers-HTTPS](https://github.com/ToiCF/CF-Workers-HTTPS)
-- [ToiCF/CF-Workers-TURN](https://github.com/ToiCF/CF-Workers-TURN)
-- [ToiCF/CF-Workers-SoftEther](https://github.com/ToiCF/CF-Workers-SoftEther)
-- [eooce](https://github.com/eooce/Cloudflare-proxy)
-- [Sukka](https://ip.skk.moe/)
-- [zhangtaile](https://github.com/cmliu/edgetunnel/pull/999)
-- [1345695](https://github.com/1345695/edcloudwasm)
-- [ToiCF/GrainTCP](https://github.com/ToiCF/GrainTCP)
-- [xream](https://github.com/cmliu/edgetunnel/pull/1359)
+| Symptom | Likely cause / fix |
+| :--- | :--- |
+| **Error 1101** page | Worker threw during render — check `DEBUG=1` logs; usually a bad `URL` disguise value or broken custom-domain binding |
+| `404` with disguise page on every route | `ADMIN` variable is not set — add it (Production env for Pages) and redeploy |
+| Admin shows no logs / `/admin/log.json` is `[]` | KV namespace not bound, or `OFF_LOG=1` is set |
+| Subscription link returns nothing | Wrong `KEY`/TOKEN, or non-UUIDv4 `UUID`; regenerate via the panel |
+| Slow or flaky connections | Raise `TCP_CONCURRENT_DIAL` / `PROXY_CONCURRENT_DIAL`, or pin a `PROXYIP` |
 
 ---
 
 ## ⚠️ Disclaimer
 
-1. This project ("edgetunnel") is for **educational, research, and personal security-testing** purposes only.
-2. Anyone downloading or using this code must strictly comply with the laws of their region.
-3. The author **cmliu** assumes no responsibility for any behavior or consequences arising from misuse of this code.
-4. This project is not liable for any direct or indirect damages caused by using the code.
-5. It is recommended to delete related deployments within 24 hours after testing.
+1. For **educational, research, and personal security-testing** purposes only.
+2. You must comply with the laws of your region when deploying and using this code.
+3. The maintainers accept no liability for misuse or for any direct or indirect damages.
 
 ---
 
-**If this project helped you, please give it a Star 🌟 — it means a lot!**
+## 🙏 Credits
+
+- Upstream project: [cmliu/edgetunnel](https://github.com/cmliu/edgetunnel) (full history, sponsors, and contributor list live there).
+- Transport/proxy ideas borrowed from: [zizifn/edgetunnel](https://github.com/zizifn/edgetunnel), [6Kmfi6HP/EDtunnel](https://github.com/6Kmfi6HP/EDtunnel), [ToiCF/GrainTCP](https://github.com/ToiCF/GrainTCP), [ToiCF/CF-Workers-HTTPS](https://github.com/ToiCF/CF-Workers-HTTPS), [ToiCF/CF-Workers-TURN](https://github.com/ToiCF/CF-Workers-TURN), [ToiCF/CF-Workers-SoftEther](https://github.com/ToiCF/CF-Workers-SoftEther), [eooce/Cloudflare-proxy](https://github.com/eooce/Cloudflare-proxy).
+
+## 📝 License
+
+MIT — see [LICENSE](./LICENSE). History of functional changes lives in [CHANGELOG](./CHANGELOG).
