@@ -174,4 +174,4 @@ Visitors hitting `/` without a valid path see the disguise page: the `URL` varia
 
 ## 📝 License
 
-MIT — see [LICENSE](./LICENSE). History of functional changes lives in [CHANGELOG](./CHANGELOG).
+MIT — see [LICENSE](./LICENSE).
