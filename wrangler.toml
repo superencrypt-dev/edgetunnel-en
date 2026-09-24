@@ -3,6 +3,6 @@ main = "_worker.js"
 compatibility_date = "2025-11-04"
 keep_vars = true
 
-#[[kv_namespaces]]
-#binding = "KV"			# KV binding name, do not change
-#id = ""				# KV namespace id (fill in yours, or bind via dashboard)
+[[kv_namespaces]]
+binding = "KV"			# KV binding name, do not change (used by _worker.js)
+id = "519162461cc242aaaed64b1a02f33234"	# default namespace id — Deploy button auto-provisions a fresh one per user; CLI users: replace with your own id or bind via dashboard

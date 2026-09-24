@@ -1,0 +1,16 @@
+{
+  "name": "edgetunnel-en",
+  "private": true,
+  "version": "2.1.0",
+  "description": "English edgetunnel edge tunnel on Cloudflare Workers",
+  "cloudflare": {
+    "bindings": {
+      "ADMIN": {
+        "description": "Admin panel login password. **Required** — pick a strong one, you will sign in at `/login` with it."
+      },
+      "KV": {
+        "description": "KV namespace for logs and runtime data. A fresh one is auto-created during Deploy to Cloudflare."
+      }
+    }
+  }
+}
