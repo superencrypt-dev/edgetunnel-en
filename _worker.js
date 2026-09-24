@@ -11,6 +11,12 @@ const BUNDLED_PAGES = {
 	"/edt-path-config.en.json": "[\n  {\n    \"项目名\": \"cmliu/edgetunnel [CM project config] (default)\",\n    \"提示消息\": \"Switched to the CM project configuration, for the cmliu/edgetunnel project.\",\n    \"路径模板\": {\n      \"PROXYIP\": \"proxyip={{IP:PORT}}\",\n      \"SOCKS5\": {\n        \"全局\": \"socks5://{{IP:PORT}}\",\n        \"标准\": \"socks5={{IP:PORT}}\"\n      },\n      \"HTTP\": {\n        \"全局\": \"http://{{IP:PORT}}\",\n        \"标准\": \"http={{IP:PORT}}\"\n      }\n    }\n  },\n  {\n    \"项目名\": \"6Kmfi6HP/EDtunnel [3K project config]\",\n    \"提示消息\": \"Switched to the 3K project configuration, for the 6Kmfi6HP/EDtunnel project.\",\n    \"路径模板\": {\n      \"PROXYIP\": \"proxyip={{IP:PORT}}\",\n      \"SOCKS5\": {\n        \"全局\": \"socks5://{{IP:PORT}}?globalproxy\",\n        \"标准\": \"socks5://{{IP:PORT}}\"\n      },\n      \"HTTP\": {\n        \"全局\": \"http://{{IP:PORT}}?globalproxy\",\n        \"标准\": \"http://{{IP:PORT}}\"\n      }\n    }\n  },\n  {\n    \"项目名\": \"eooce/Cloudflare-proxy [Lao Wang project config]\",\n    \"提示消息\": \"Note! The Lao Wang project does not support non-global mode for SOCKS5/HTTP outbound.\",\n    \"路径模板\": {\n      \"PROXYIP\": \"proxyip={{IP:PORT}}\",\n      \"SOCKS5\": {\n        \"全局\": \"proxyip=socks5://{{IP:PORT}}\",\n        \"标准\": \"proxyip=socks5://{{IP:PORT}}\"\n      },\n      \"HTTP\": {\n        \"全局\": \"proxyip=http://{{IP:PORT}}\",\n        \"标准\": \"proxyip=http://{{IP:PORT}}\"\n      }\n    }\n  }\n]\n"
 	/*__BUNDLED_END__*/
 };
+function escapeHtml(s) {
+	return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+function escapeRegExp(s) {
+	return String(s == null ? '' : s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
 function bundledResponse(path, status, contentType, noStore) {
 	const body = BUNDLED_PAGES[path];
 	if (body == null) return new Response('Not Found', { status: 404 });
@@ -473,7 +479,7 @@ export default {
 						} else { // 订阅转换
 							const 订阅转换URL = `${config_JSON.订阅转换配置.SUBAPI}/sub?target=${订阅类型}&url=${encodeURIComponent(url.protocol + '//' + url.host + '/sub?target=mixed&token=' + 今日订阅转换后端专属TOKEN + '&cnIspCode=' + 识别运营商(request) + (url.searchParams.has('sub') && url.searchParams.get('sub') != '' ? `&sub=${url.searchParams.get('sub')}` : ''))}&config=${encodeURIComponent(config_JSON.订阅转换配置.SUBCONFIG)}&emoji=${config_JSON.订阅转换配置.SUBEMOJI}&list=${config_JSON.订阅转换配置.SUBLIST}&scv=${config_JSON.跳过证书验证}&xudp=${config_JSON.订阅转换配置.XUDP}&udp=${config_JSON.订阅转换配置.UDP}&tls13=${config_JSON.订阅转换配置.TLS13}&append_type=${config_JSON.订阅转换配置.APPEND_TYPE}&sort=${config_JSON.订阅转换配置.SORT}&expand=${config_JSON.订阅转换配置.EXPAND}`;
 							try {
-								const response = await fetch(订阅转换URL, { headers: { 'User-Agent': 'Subconverter for ' + 订阅类型 + ' edge' + 'tunnel (https://github.com/' + 特征码字典[1] + '/edge' + 'tunnel)' } });
+								const response = await fetch(订阅转换URL, { headers: { 'User-Agent': 'Subconverter for ' + 订阅类型 + ' edge' + 'tunnel (https://github.com/' + 特征码字典[1] + '/edge' + 'tunnel)' }, signal: AbortSignal.timeout(15000) });
 								if (response.ok) {
 									订阅内容 = await response.text();
 									if (url.searchParams.has('surge') || ua.includes('surge')) 订阅内容 = Surge订阅配置文件热补丁(订阅内容, url.protocol + '//' + url.host + '/sub?token=' + 订阅TOKEN + '&surge', config_JSON);
@@ -5342,7 +5348,7 @@ function Surge订阅配置文件热补丁(content, url, config_JSON) {
 			const host = x.split("sni=")[1].split(",")[0];
 			const 备改内容 = `sni=${host}, skip-cert-verify=${config_JSON.跳过证书验证}`;
 			const 正确内容 = `sni=${host}, skip-cert-verify=${config_JSON.跳过证书验证}, ws=true, ws-path=${完整节点路径.replace(/,/g, '%2C')}, ws-headers=Host:"${host}"`;
-			输出内容 += x.replace(new RegExp(备改内容, 'g'), 正确内容).replace("[", "").replace("]", "") + '\n';
+			输出内容 += x.replace(new RegExp(escapeRegExp(备改内容), 'g'), () => 正确内容).replace("[", "").replace("]", "") + '\n';
 		} else {
 			输出内容 += x + '\n';
 		}
@@ -5355,7 +5361,8 @@ function Surge订阅配置文件热补丁(content, url, config_JSON) {
 async function 请求日志记录(env, request, 访问IP, 请求类型 = "Get_SUB", config_JSON, 是否写入KV日志 = true) {
 	try {
 		const 当前时间 = new Date();
-		const 日志内容 = { TYPE: 请求类型, IP: 访问IP, ASN: `AS${request.cf.asn || '0'} ${request.cf.asOrganization || 'Unknown'}`, CC: `${request.cf.country || 'N/A'} ${request.cf.city || 'N/A'}`, URL: request.url, UA: request.headers.get('User-Agent') || 'Unknown', TIME: 当前时间.getTime() };
+		const 脱敏URL = request.url.replace(/([?&](token|password|auth|secret))=[^&#]*/gi, '$1=***');
+		const 日志内容 = { TYPE: 请求类型, IP: 访问IP, ASN: `AS${request.cf.asn || '0'} ${request.cf.asOrganization || 'Unknown'}`, CC: `${request.cf.country || 'N/A'} ${request.cf.city || 'N/A'}`, URL: 脱敏URL, UA: request.headers.get('User-Agent') || 'Unknown', TIME: 当前时间.getTime() };
 		if (config_JSON.TG.启用) {
 			try {
 				const TG_TXT = await env.KV.get('tg.json');
@@ -5394,7 +5401,7 @@ async function 请求日志记录(env, request, 访问IP, 请求类型 = "Get_SU
 				if (!Array.isArray(日志数组)) { 日志数组 = [日志内容] }
 				else if (请求类型 !== "Get_SUB") {
 					const 三十分钟前时间戳 = 当前时间.getTime() - 30 * 60 * 1000;
-					if (日志数组.some(log => log.TYPE !== "Get_SUB" && log.IP === 访问IP && log.URL === request.url && log.UA === (request.headers.get('User-Agent') || 'Unknown') && log.TIME >= 三十分钟前时间戳)) return;
+					if (日志数组.some(log => log.TYPE !== "Get_SUB" && log.IP === 访问IP && log.URL === 脱敏URL && log.UA === (request.headers.get('User-Agent') || 'Unknown') && log.TIME >= 三十分钟前时间戳)) return;
 					日志数组.push(日志内容);
 					while (JSON.stringify(日志数组, null, 2).length > KV容量限制 * 1024 * 1024 && 日志数组.length > 0) 日志数组.shift();
 				} else {
@@ -5950,7 +5957,8 @@ async function 获取优选订阅生成器数据(优选订阅生成器HOST) {
 
 	try {
 		const response = await fetch(优选订阅生成器URL, {
-			headers: { 'User-Agent': 汇聚订阅_UA }
+			headers: { 'User-Agent': 汇聚订阅_UA },
+			signal: AbortSignal.timeout(15000)
 		});
 
 		if (!response.ok) {
@@ -6581,7 +6589,7 @@ async function html1101(host, 访问IP) {
 <!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en-US"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en-US"> <!--<![endif]-->
 <head>
-<title>Worker threw exception | ${host} | Cloudflare</title>
+<title>Worker threw exception | ${escapeHtml(host)} | Cloudflare</title>
 <meta charset="UTF-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
@@ -6623,12 +6631,12 @@ async function html1101(host, 访问IP) {
                 <div class="cf-columns two">
                     <div class="cf-column">
                         <h2 data-translate="what_happened">What happened?</h2>
-                            <p>You've requested a page on a website (${host}) that is on the <a href="https://www.cloudflare.com/5xx-error-landing?utm_source=error_100x" target="_blank">Cloudflare</a> network. An unknown error occurred while rendering the page.</p>
+                            <p>You've requested a page on a website (${escapeHtml(host)}) that is on the <a href="https://www.cloudflare.com/5xx-error-landing?utm_source=error_100x" target="_blank">Cloudflare</a> network. An unknown error occurred while rendering the page.</p>
                     </div>
 
                     <div class="cf-column">
                         <h2 data-translate="what_can_i_do">What can I do?</h2>
-                            <p><strong>If you are the owner of this website:</strong><br />refer to <a href="https://developers.cloudflare.com/workers/observability/errors/" target="_blank">Workers - Errors and Exceptions</a> and check Workers Logs for ${host}.</p>
+                            <p><strong>If you are the owner of this website:</strong><br />refer to <a href="https://developers.cloudflare.com/workers/observability/errors/" target="_blank">Workers - Errors and Exceptions</a> and check Workers Logs for ${escapeHtml(host)}.</p>
                     </div>
 
                 </div>
@@ -6641,7 +6649,7 @@ async function html1101(host, 访问IP) {
       <span id="cf-footer-item-ip" class="cf-footer-item hidden sm:block sm:mb-1">
         Your IP:
         <button type="button" id="cf-footer-ip-reveal" class="cf-footer-ip-reveal-btn">Click to reveal</button>
-        <span class="hidden" id="cf-footer-ip">${访问IP}</span>
+        <span class="hidden" id="cf-footer-ip">${escapeHtml(访问IP)}</span>
         <span class="cf-footer-separator sm:hidden">&bull;</span>
       </span>
       <span class="cf-footer-item sm:block sm:mb-1"><span>Performance &amp; security by</span> <a rel="noopener noreferrer" href="https://www.cloudflare.com/5xx-error-landing" id="brand_link" target="_blank">Cloudflare</a></span>

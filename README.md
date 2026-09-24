@@ -20,14 +20,14 @@ English edition of **edgetunnel**: a VLESS / Trojan / Shadowsocks edge tunnel ru
 ## ✅ Prerequisites
 
 1. A Cloudflare account (free plan works).
-2. One **KV namespace** for logs and runtime data (bind it as variable `KV` after deploy).
+2. One **KV namespace** for logs and runtime data — auto-provisioned by the Deploy button; for CLI/Pages methods bind it manually as variable `KV` after deploy, then redeploy.
 3. (Optional) A subdomain on Cloudflare DNS if you want a custom domain instead of `*.workers.dev` / `*.pages.dev`.
 
 ---
 
 ## 🚀 Deployment (single file — frontend inlined)
 
-[`_worker.js`](./_worker.js) is fully self-contained: the login/admin/status pages from [`public/`](./public) are inlined into it at build time (see `tools/build-inline.mjs`), so no asset bindings are needed. It runs on Workers, Pages, and even dashboard code paste. One deployment carries everything.
+[`_worker.js`](./_worker.js) is fully self-contained: the login page, admin panel, `noADMIN`/`noKV` pages, and PATH presets from [`public/`](./public) are inlined into it at build time (see `tools/build-inline.mjs`), so no asset bindings are needed. It runs on Workers, Pages, and even dashboard code paste. One deployment carries everything.
 
 ### 0. One-click Deploy (fastest, recommended)
 
@@ -67,7 +67,7 @@ The worker is a single self-contained file, so it also runs on Pages:
 5. `Deployments` → `Create deployment`, re-upload the same ZIP → `Save and deploy` (activates the variable + binding).
 6. Open `https://<project>.pages.dev/login` and sign in.
 
-> **KV is mandatory on Pages too** — without the `KV` binding you get the `noKV` page, config is not saved, logs stay empty, and quick-sub (`/<KEY>`) does not work.
+> **KV is mandatory on Pages too** — without the `KV` binding (and no `UUID` set) you get the `noKV` page, config is not saved, logs stay empty, and quick-sub (`/<KEY>`) does not work.
 
 ### D. Cloudflare Pages — Connect to Git
 
@@ -87,6 +87,8 @@ Only `ADMIN` is required. The rest tune behavior:
 | `ADMIN` | ✅ | `change-me-strong-password` | Admin panel login password. Also accepts `PASSWORD`, `password`, `pswd`, `TOKEN`, `KEY`, `UUID` as aliases |
 | `KEY` | ❌ | `my-secret-key` | Quick-subscription path key — visiting `/<KEY>` redirects to your subscription link |
 | `UUID` | ❌ | `90cd4a77-141a-43c9-991b-08263cfe9c10` | Force a fixed UUID (standard **UUIDv4** only, otherwise nodes break) |
+| `HOST` | ❌ | `vless.example.com` | Override the node host list (comma-separated; replaces auto-detected hosts) |
+| `PATH` | ❌ | `/mypath` | Override the node path (must start with `/`) |
 | `PROXYIP` | ❌ | `proxyip.example.com:443` | Global custom reverse-proxy IP / domain |
 | `URL` | ❌ | `https://example.com` | Homepage disguise URL (default: built-in nginx page; `1101` also accepted) |
 | `GO2SOCKS5` | ❌ | `blog.example.com,*.example.net,*google.com` | Force-SOCKS5 list, comma-separated (`*` = global). Appended to the built-in list |
@@ -187,7 +189,7 @@ Visitors hitting `/` without a valid path see the disguise page: the `URL` varia
 
 ## 📝 License
 
-MIT — see [LICENSE](./LICENSE).
+GPL-2.0 — see [LICENSE](./LICENSE) (same license as upstream).
 
 ## 🛠️ For Contributors
 
@@ -199,3 +201,5 @@ node --check _worker.js
 ```
 
 Commit both `public/` and the rebuilt `_worker.js`.
+
+`public/samples/` holds legacy mock fixtures (old `index.html`, `sub`, `version`, `locations`, sample API payloads) — they are **not** bundled or served; the worker generates those routes live. Only the 5 files read by `tools/build-inline.mjs` ship inside `_worker.js`.
