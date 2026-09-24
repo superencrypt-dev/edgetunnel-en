@@ -25,11 +25,9 @@ English edition of **edgetunnel**: a VLESS / Trojan / Shadowsocks edge tunnel ru
 
 ---
 
-## 🚀 Deployment (single deploy — frontend bundled)
+## 🚀 Deployment (single file — frontend inlined)
 
-This repo is self-contained: [`_worker.js`](./_worker.js) (backend) + [`public/`](./public) (login/admin/status pages) + [`wrangler.toml`](./wrangler.toml) (worker name, `KV` binding, assets). One deployment carries everything — no second project, no URL syncing.
-
-> ⚠️ Copy-pasting `_worker.js` into the dashboard editor is **not supported**: the editor cannot carry the `public/` assets or bindings, and `/login` will fail with `1101`. Use one of the methods below.
+[`_worker.js`](./_worker.js) is fully self-contained: the login/admin/status pages from [`public/`](./public) are inlined into it at build time (see `tools/build-inline.mjs`), so no asset bindings are needed. It runs on Workers, Pages, and even dashboard code paste. One deployment carries everything.
 
 ### 0. One-click Deploy (fastest, recommended)
 
@@ -54,9 +52,29 @@ wrangler deploy
 
 1. Fork this repo to your own GitHub account.
 2. Dashboard → `Workers & Pages` → `Create` → `Connect to Git` → select the fork.
-3. Framework preset: none needed — builds run `wrangler deploy` using the repo's `wrangler.toml` (assets included).
+3. Framework preset: none needed — builds run `wrangler deploy` using the repo's `wrangler.toml`.
 4. Add the `ADMIN` secret and confirm the auto-provisioned `KV` binding → deploy.
 5. Every push to `main` redeploys automatically.
+
+### C. Cloudflare Pages — Upload assets (no Git/CLI needed)
+
+The worker is a single self-contained file, so it also runs on Pages:
+
+1. Download this repo as a ZIP (`Code` → `Download ZIP` on GitHub).
+2. Pages console → `Upload assets`, name the project, upload the ZIP → `Deploy site`.
+3. `Settings` → `Environment variables` → define for **Production**: `ADMIN` = your admin password → `Save`.
+4. `Settings` → `Bindings` → `Add` → `KV namespace`: variable name `KV` → select or create a namespace → `Save`.
+5. `Deployments` → `Create deployment`, re-upload the same ZIP → `Save and deploy` (activates the variable + binding).
+6. Open `https://<project>.pages.dev/login` and sign in.
+
+> **KV is mandatory on Pages too** — without the `KV` binding you get the `noKV` page, config is not saved, logs stay empty, and quick-sub (`/<KEY>`) does not work.
+
+### D. Cloudflare Pages — Connect to Git
+
+1. Fork this repo.
+2. Pages console → `Connect to Git` → select the fork (`Build command` empty is fine — Pages deploys `_worker.js` directly).
+3. Under `Environment variables (advanced)` add `ADMIN`, bind `KV` as in method C steps 3–4 → `Save and Deploy`.
+4. Open `https://<project>.pages.dev/login` and sign in.
 
 ---
 
@@ -145,7 +163,7 @@ Visitors hitting `/` without a valid path see the disguise page: the `URL` varia
 
 | Symptom | Likely cause / fix |
 | :--- | :--- |
-| **Error 1101** page | Worker threw during render — check `DEBUG=1` logs; usually a bad `URL` disguise value, a broken custom-domain binding, or a deploy missing the `public/` assets (dashboard paste) |
+| **Error 1101** page | Worker threw during render — check `DEBUG=1` logs; usually a bad `URL` disguise value or a broken custom-domain binding |
 | `404` with disguise page on every route | `ADMIN` variable is not set — add it and redeploy |
 | Admin shows no logs / `/admin/log.json` is `[]` | KV namespace not bound, or `OFF_LOG=1` is set |
 | Subscription link returns nothing | Wrong `KEY`/TOKEN, or non-UUIDv4 `UUID`; regenerate via the panel |
@@ -170,3 +188,14 @@ Visitors hitting `/` without a valid path see the disguise page: the `URL` varia
 ## 📝 License
 
 MIT — see [LICENSE](./LICENSE).
+
+## 🛠️ For Contributors
+
+`public/` holds the editable frontend source (mirrored from [`edt-pages-en`](https://github.com/superencrypt-dev/edt-pages-en)). After changing anything in `public/`, regenerate the bundle before committing:
+
+```bash
+node tools/build-inline.mjs
+node --check _worker.js
+```
+
+Commit both `public/` and the rebuilt `_worker.js`.

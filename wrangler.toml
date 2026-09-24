@@ -6,8 +6,3 @@ keep_vars = true
 [[kv_namespaces]]
 binding = "KV"			# KV binding name, do not change (used by _worker.js)
 id = "519162461cc242aaaed64b1a02f33234"	# default namespace id — Deploy button auto-provisions a fresh one per user; CLI users: replace with your own id or bind via dashboard
-
-[assets]
-directory = "public"		# bundled frontend (login/admin/status pages served via env.ASSETS)
-binding = "ASSETS"		# required: exposes static files to the worker as env.ASSETS
-run_worker_first = true		# worker script handles all routes; static files served only via env.ASSETS calls
