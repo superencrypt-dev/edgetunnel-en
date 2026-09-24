@@ -1,5 +1,7 @@
 # edgetunnel-en
 
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/superencrypt-dev/edgetunnel-en)
+
 English edition of **edgetunnel**: a VLESS / Trojan / Shadowsocks edge tunnel running on Cloudflare Workers or Pages, with a visual admin panel and automatic subscription generation for popular proxy clients.
 
 > Based on [cmliu/edgetunnel](https://github.com/cmliu/edgetunnel) — see [Credits](#-credits) for full attribution.
@@ -24,6 +26,17 @@ English edition of **edgetunnel**: a VLESS / Trojan / Shadowsocks edge tunnel ru
 ---
 
 ## 🚀 Deployment (pick one — all three recommended)
+
+### 0. One-click Deploy (fastest)
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/superencrypt-dev/edgetunnel-en)
+
+Click the button, authorize Cloudflare, and a Worker named `edgetunnel-en` is created from this repo. Then finish the mandatory setup (the button cannot do these for you):
+
+1. `Settings` → `Variables` → `Add variable`: name `ADMIN`, value = your admin password → `Save`.
+2. `Bindings` → `Add binding` → `KV namespace`: variable name `KV`, select or create a namespace → `Add binding`.
+3. `Deployments` → redeploy so the new variable and binding take effect.
+4. Open `https://<your-worker>.workers.dev/login` and sign in (custom domain optional via `Triggers` → `Add custom domain`).
 
 ### A. Cloudflare Workers (dashboard)
 
