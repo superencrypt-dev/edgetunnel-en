@@ -1,2 +1,0 @@
-# Copy to .dev.vars (local only, never commit) or fill these in the Deploy to Cloudflare setup page.
-ADMIN=change-me-to-a-strong-password
