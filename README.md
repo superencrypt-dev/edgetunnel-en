@@ -25,54 +25,38 @@ English edition of **edgetunnel**: a VLESS / Trojan / Shadowsocks edge tunnel ru
 
 ---
 
-## 🚀 Deployment (pick one — all three recommended)
+## 🚀 Deployment (single deploy — frontend bundled)
 
-### 0. One-click Deploy (fastest)
+This repo is self-contained: [`_worker.js`](./_worker.js) (backend) + [`public/`](./public) (login/admin/status pages) + [`wrangler.toml`](./wrangler.toml) (worker name, `KV` binding, assets). One deployment carries everything — no second project, no URL syncing.
+
+> ⚠️ Copy-pasting `_worker.js` into the dashboard editor is **not supported**: the editor cannot carry the `public/` assets or bindings, and `/login` will fail with `1101`. Use one of the methods below.
+
+### 0. One-click Deploy (fastest, recommended)
 
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/superencrypt-dev/edgetunnel-en)
 
-Click the button, authorize Cloudflare, and a Worker named `edgetunnel-en` is created from this repo. The setup page lets you customize the resource names, then Cloudflare **auto-provisions a fresh KV namespace** and binds it as `KV` — no manual binding needed. It also prompts for the `ADMIN` secret (declared in [`.dev.vars.example`](./.dev.vars.example), placeholder only — no real password in this repo). After deploy:
+Click the button, authorize Cloudflare, and a Worker named `edgetunnel-en` is created from this repo — code, `public/` assets, and bindings together. The setup page lets you customize the resource names, then Cloudflare **auto-provisions a fresh KV namespace** and binds it as `KV` — no manual binding needed. It also prompts for the `ADMIN` secret (declared in [`.dev.vars.example`](./.dev.vars.example), placeholder only — no real password in this repo). After deploy:
 
 1. Open `https://<your-worker>.workers.dev/login` and sign in with your `ADMIN` password (custom domain optional via `Triggers` → `Add custom domain`).
 
-### A. Cloudflare Workers (dashboard)
-
-1. In the Workers console, create a new Worker and open the editor.
-2. Paste the full contents of [`_worker.js`](./_worker.js) into the editor and **Deploy**.
-3. Go to `Settings` → `Variables` → `Add variable`: name `ADMIN`, value = your admin password → `Save`.
-4. Go to `Bindings` → `Add binding` → `KV namespace`: variable name `KV`, select or create a namespace → `Add binding`.
-5. (Optional) `Triggers` → `Add custom domain`, e.g. `vless.example.com`, and wait for the certificate.
-6. Open `https://<your-domain>/login` and sign in.
-
-### B. Cloudflare Pages — Upload assets (no Git needed)
-
-1. Download this repo as a ZIP (`Code` → `Download ZIP` on GitHub).
-2. In the Pages console choose `Upload assets`, name the project (e.g. `edgetunnel`), upload the ZIP → `Deploy site`.
-3. `Settings` → `Environment variables` → define for **Production**: `ADMIN` = your admin password → `Save`.
-4. `Deployments` → `Create deployment`, re-upload the same ZIP → `Save and deploy`.
-5. `Settings` → `Bindings` → `Add` → `KV namespace`: variable name `KV` → `Save`, then retry the deployment.
-6. (Optional) `Custom domains` → `Set up a custom domain` with a subdomain (not your apex domain), add the requested CNAME at your DNS provider → `Activate domain`.
-7. Open `https://<your-domain>/login` and sign in.
-
-### C. Cloudflare Pages — Connect to Git
-
-1. Fork this repo to your own GitHub account.
-2. In the Pages console choose `Connect to Git`, select the forked repo → `Begin setup`.
-3. Under `Environment variables (advanced)` add `ADMIN` = your admin password → `Save and Deploy`.
-4. Bind KV (`Settings` → `Bindings` → `KV namespace`, variable name `KV`) and redeploy.
-5. (Optional) add a custom domain as in method B, step 6.
-6. Open `https://<your-domain>/login` and sign in.
-
-### D. Wrangler CLI (alternative)
-
-This repo ships a [`wrangler.toml`](./wrangler.toml) (`keep_vars = true`, so dashboard variables survive redeploys):
+### A. Wrangler CLI
 
 ```bash
+git clone https://github.com/superencrypt-dev/edgetunnel-en.git
+cd edgetunnel-en
 wrangler login
 wrangler deploy
 ```
 
-Then set the `ADMIN` variable and the `KV` binding in the dashboard (`Settings` → `Variables` / `Bindings`).
+`wrangler.toml` has `keep_vars = true`, so dashboard variables survive redeploys. Then set the `ADMIN` variable and the `KV` binding in the dashboard (`Settings` → `Variables` / `Bindings`) and redeploy.
+
+### B. Fork + Workers Builds (auto-deploy on push)
+
+1. Fork this repo to your own GitHub account.
+2. Dashboard → `Workers & Pages` → `Create` → `Connect to Git` → select the fork.
+3. Framework preset: none needed — builds run `wrangler deploy` using the repo's `wrangler.toml` (assets included).
+4. Add the `ADMIN` secret and confirm the auto-provisioned `KV` binding → deploy.
+5. Every push to `main` redeploys automatically.
 
 ---
 
@@ -161,8 +145,8 @@ Visitors hitting `/` without a valid path see the disguise page: the `URL` varia
 
 | Symptom | Likely cause / fix |
 | :--- | :--- |
-| **Error 1101** page | Worker threw during render — check `DEBUG=1` logs; usually a bad `URL` disguise value or broken custom-domain binding |
-| `404` with disguise page on every route | `ADMIN` variable is not set — add it (Production env for Pages) and redeploy |
+| **Error 1101** page | Worker threw during render — check `DEBUG=1` logs; usually a bad `URL` disguise value, a broken custom-domain binding, or a deploy missing the `public/` assets (dashboard paste) |
+| `404` with disguise page on every route | `ADMIN` variable is not set — add it and redeploy |
 | Admin shows no logs / `/admin/log.json` is `[]` | KV namespace not bound, or `OFF_LOG=1` is set |
 | Subscription link returns nothing | Wrong `KEY`/TOKEN, or non-UUIDv4 `UUID`; regenerate via the panel |
 | Slow or flaky connections | Raise `TCP_CONCURRENT_DIAL` / `PROXY_CONCURRENT_DIAL`, or pin a `PROXYIP` |
@@ -180,6 +164,7 @@ Visitors hitting `/` without a valid path see the disguise page: the `URL` varia
 ## 🙏 Credits
 
 - Upstream project: [cmliu/edgetunnel](https://github.com/cmliu/edgetunnel) (full history, sponsors, and contributor list live there).
+- Bundled frontend source mirror: [`superencrypt-dev/edt-pages-en`](https://github.com/superencrypt-dev/edt-pages-en) (synced into [`public/`](./public)).
 - Transport/proxy ideas borrowed from: [zizifn/edgetunnel](https://github.com/zizifn/edgetunnel), [6Kmfi6HP/EDtunnel](https://github.com/6Kmfi6HP/EDtunnel), [ToiCF/GrainTCP](https://github.com/ToiCF/GrainTCP), [ToiCF/CF-Workers-HTTPS](https://github.com/ToiCF/CF-Workers-HTTPS), [ToiCF/CF-Workers-TURN](https://github.com/ToiCF/CF-Workers-TURN), [ToiCF/CF-Workers-SoftEther](https://github.com/ToiCF/CF-Workers-SoftEther), [eooce/Cloudflare-proxy](https://github.com/eooce/Cloudflare-proxy).
 
 ## 📝 License
