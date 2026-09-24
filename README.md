@@ -27,17 +27,36 @@ English edition of **edgetunnel**: a VLESS / Trojan / Shadowsocks edge tunnel ru
 
 ## 🚀 Deployment (single file — frontend inlined)
 
-[`_worker.js`](./_worker.js) is fully self-contained: the login page, admin panel, `noADMIN`/`noKV` pages, and PATH presets from [`public/`](./public) are inlined into it at build time (see `tools/build-inline.mjs`), so no asset bindings are needed. It runs on Workers, Pages, and even dashboard code paste. One deployment carries everything.
+[`_worker.js`](./_worker.js) is fully self-contained: the login page, admin panel, `noADMIN`/`noKV` pages, and PATH presets from [`public/`](./public) are inlined into it at build time (see `tools/build-inline.mjs`), so no asset bindings are needed. It runs on Workers, Pages, and dashboard code paste. One deployment carries everything.
 
-### 0. One-click Deploy (fastest, recommended)
+### 0. Cloudflare Pages — Upload assets (recommended, no Git/CLI needed)
+
+1. Download this repo as a ZIP (`Code` → `Download ZIP` on GitHub) and extract it.
+2. Re-zip **the contents** so `_worker.js` sits at the ZIP root (not inside a subfolder — Pages only executes a root-level `_worker.js`).
+3. Pages console → `Upload assets` → name the project (e.g. `edgetunnel`) → upload the ZIP → `Deploy site`.
+4. Create the KV namespace (one time per account): `Workers & Pages` → `KV` → `Create a namespace` (e.g. `edt-kv`).
+5. Back in the project: `Settings` → `Environment variables` → define for **Production**: `ADMIN` = your admin password → `Save`.
+6. `Settings` → `Bindings` → `Add` → `KV namespace`: variable name `KV` → select the namespace → `Save`.
+7. `Deployments` → `Create deployment` → re-upload the same ZIP → `Save and deploy` (activates the variable + binding).
+8. Open `https://<project>.pages.dev/login` and sign in (custom domain optional via `Custom domains`).
+9. Every update = repeat step 7 with a fresh ZIP (env vars and bindings are kept).
+
+> **KV is mandatory** — without the `KV` binding (and no `UUID` set) you get the `noKV` page, config is not saved, logs stay empty, and quick-sub (`/<KEY>`) does not work.
+
+### A. Pages — Connect to Git (auto-deploy on push)
+
+1. Fork this repo.
+2. Pages console → `Connect to Git` → select the fork (`Build command` empty is fine — Pages deploys the root `_worker.js` directly).
+3. Under `Environment variables (advanced)` add `ADMIN`, bind `KV` (variable name `KV`) as in method 0 steps 4–6 → `Save and Deploy`.
+4. Open `https://<project>.pages.dev/login` and sign in. Every push to `main` redeploys automatically.
+
+### B. One-click Deploy to Workers (fastest alternative)
 
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/superencrypt-dev/edgetunnel-en)
 
-Click the button, authorize Cloudflare, and a Worker named `edgetunnel-en` is created from this repo — code, `public/` assets, and bindings together. The setup page lets you customize the resource names, then Cloudflare **auto-provisions a fresh KV namespace** and binds it as `KV` — no manual binding needed. It also prompts for the `ADMIN` secret (declared in [`.dev.vars.example`](./.dev.vars.example), placeholder only — no real password in this repo). After deploy:
+Click the button, authorize Cloudflare, and a Worker named `edgetunnel-en` is created from this repo. The setup page lets you customize the resource names, then Cloudflare **auto-provisions a fresh KV namespace** and binds it as `KV` — no manual binding needed. It also prompts for the `ADMIN` secret (declared in [`.dev.vars.example`](./.dev.vars.example), placeholder only — no real password in this repo). After deploy, open `https://<your-worker>.workers.dev/login` and sign in (custom domain optional via `Triggers` → `Add custom domain`).
 
-1. Open `https://<your-worker>.workers.dev/login` and sign in with your `ADMIN` password (custom domain optional via `Triggers` → `Add custom domain`).
-
-### A. Wrangler CLI
+### C. Wrangler CLI / Workers Builds
 
 ```bash
 git clone https://github.com/superencrypt-dev/edgetunnel-en.git
@@ -46,35 +65,11 @@ wrangler login
 wrangler deploy
 ```
 
-`wrangler.toml` has `keep_vars = true`, so dashboard variables survive redeploys. Then set the `ADMIN` variable and the `KV` binding in the dashboard (`Settings` → `Variables` / `Bindings`) and redeploy.
+`wrangler.toml` has `keep_vars = true`, so dashboard variables survive redeploys. Then set the `ADMIN` variable and the `KV` binding in the dashboard (`Settings` → `Variables` / `Bindings`) and redeploy. For Git-connected Workers Builds, connect the fork instead — builds run `wrangler deploy` automatically on push.
 
-### B. Fork + Workers Builds (auto-deploy on push)
+### D. Dashboard code paste (Workers)
 
-1. Fork this repo to your own GitHub account.
-2. Dashboard → `Workers & Pages` → `Create` → `Connect to Git` → select the fork.
-3. Framework preset: none needed — builds run `wrangler deploy` using the repo's `wrangler.toml`.
-4. Add the `ADMIN` secret and confirm the auto-provisioned `KV` binding → deploy.
-5. Every push to `main` redeploys automatically.
-
-### C. Cloudflare Pages — Upload assets (no Git/CLI needed)
-
-The worker is a single self-contained file, so it also runs on Pages:
-
-1. Download this repo as a ZIP (`Code` → `Download ZIP` on GitHub).
-2. Pages console → `Upload assets`, name the project, upload the ZIP → `Deploy site`.
-3. `Settings` → `Environment variables` → define for **Production**: `ADMIN` = your admin password → `Save`.
-4. `Settings` → `Bindings` → `Add` → `KV namespace`: variable name `KV` → select or create a namespace → `Save`.
-5. `Deployments` → `Create deployment`, re-upload the same ZIP → `Save and deploy` (activates the variable + binding).
-6. Open `https://<project>.pages.dev/login` and sign in.
-
-> **KV is mandatory on Pages too** — without the `KV` binding (and no `UUID` set) you get the `noKV` page, config is not saved, logs stay empty, and quick-sub (`/<KEY>`) does not work.
-
-### D. Cloudflare Pages — Connect to Git
-
-1. Fork this repo.
-2. Pages console → `Connect to Git` → select the fork (`Build command` empty is fine — Pages deploys `_worker.js` directly).
-3. Under `Environment variables (advanced)` add `ADMIN`, bind `KV` as in method C steps 3–4 → `Save and Deploy`.
-4. Open `https://<project>.pages.dev/login` and sign in.
+Paste [`_worker.js`](./_worker.js) into a Worker's editor and **Deploy** (the file is self-contained since the frontend is inlined). Then add `ADMIN` (`Settings` → `Variables`) and bind `KV` (`Settings` → `Bindings` → `KV namespace`, variable name `KV`), redeploy, and open `/login`.
 
 ---
 
